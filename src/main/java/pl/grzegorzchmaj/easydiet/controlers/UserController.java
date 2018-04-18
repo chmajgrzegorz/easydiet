@@ -58,7 +58,7 @@ public class UserController {
         userInfoService.setUser(user);
         userInfoService.setLogged(true);
         redirectAttributes.addFlashAttribute("info", "Zarejestrowałeś się poprawnie");
-        return "redirect:/register";
+        return "redirect:/home";
     }
 
     @GetMapping("/login")
@@ -74,12 +74,22 @@ public class UserController {
             userInfoService.setUser(logged.get());
             userInfoService.setLogged(true);
             attr.addFlashAttribute("info", "Zalogowano użytkownika");
-            return "redirect:/login";
+            return "redirect:/home";
         }
         else {
             attr.addFlashAttribute("info", "Nie ma takiego użytkownika");
             return "redirect:/login";
         }
+    }
 
+    @GetMapping("/logout")
+    public String logout(RedirectAttributes attr){
+        if(!userInfoService.isLogged()){
+            attr.addFlashAttribute("info", "Zaloguj się!");
+            return"redirect:/login";
+        }
+        userInfoService.setLogged(false);
+        attr.addFlashAttribute("info", "Wylogowano");
+        return "redirect:/home";
     }
 }
