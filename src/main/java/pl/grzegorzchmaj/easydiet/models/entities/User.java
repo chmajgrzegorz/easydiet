@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import pl.grzegorzchmaj.easydiet.enums.PhysicalActivity;
 import pl.grzegorzchmaj.easydiet.enums.Plans;
 import pl.grzegorzchmaj.easydiet.enums.Sex;
+import pl.grzegorzchmaj.easydiet.models.forms.RegisterForm;
 
 import javax.persistence.*;
 
@@ -30,6 +31,16 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Plans plans;
 
+    public User(RegisterForm registerForm){
+        this.login=registerForm.getLogin();
+        this.password=registerForm.getPassword();
+        this.weight=registerForm.getWeight();
+        this.height=registerForm.getHeight();
+        this.sex=registerForm.getSex();
+        this.age=registerForm.getAge();
+        this.physicalActivity=registerForm.getPhysicalActivity();
+        this.plans=registerForm.getPlans();
+    }
 
 
 }

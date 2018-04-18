@@ -11,6 +11,6 @@ public enum Sex {
     WOMAN("Kobieta", 'K'),
     MAN("Mężczyzna", 'K');
 
-    private String desc;
+    private String description;
     private char sex;
 }
