@@ -9,7 +9,7 @@
 
     Składnik:  <p th:text="${name}"></p><br/>
     <form th:action="@{/mealweight}" th:object="${model}" method="post">
-        <input type="text" th:field="*{ingredient}"/>
+        <input type="hidden" th:field="*{ingredient}"/>
         Waga: <input type="text" th:field="*{weight}"/>
         <input type="submit" value="Dodaj gramature"/>
     </form>

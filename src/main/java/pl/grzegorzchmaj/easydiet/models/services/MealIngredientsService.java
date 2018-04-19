@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 import pl.grzegorzchmaj.easydiet.models.entities.Ingredient;
 import pl.grzegorzchmaj.easydiet.models.entities.IngredientWeight;
+import pl.grzegorzchmaj.easydiet.models.forms.MealForm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,19 +23,18 @@ public class MealIngredientsService {
     private String name;
     private List<Ingredient> ingredients;
     private List<IngredientWeight> setIngredients = new ArrayList<>();
+    private MealForm mealForm;
 
     public void clear() {
         this.name = null;
         this.ingredients = null;
         this.setIngredients = null;
+        this.mealForm = null;
     }
 
     public Ingredient getOneIngredient(){
-        System.out.println("Wielkość " + ingredients.size());
         Ingredient oneIngredient = ingredients.get(ingredients.size()-1);
-        System.out.println("Sprawdzenie 3");
         ingredients.remove(ingredients.size()-1);
-        System.out.println("Sprawdzenie 4");
         return oneIngredient;
     }
 

@@ -53,9 +53,7 @@ public class MealController {
             return "redirect:/login";
         }
         IngredientWeight ingredientWeight = new IngredientWeight();
-        System.out.println(ingredientWeight);
         ingredientWeight.setIngredient(mealIngredientsService.getOneIngredient());
-        System.out.println(ingredientWeight);
         model.addAttribute("model", ingredientWeight);
         model.addAttribute("name", ingredientWeight.getIngredient().getName());
         return "mealweight";
@@ -68,10 +66,12 @@ public class MealController {
             attr.addFlashAttribute("info", "Ta strona jest dostępna tylko dla zalogowanych użytkowników");
             return "redirect:/login";
         }
-        System.out.println(ingredientWeight);
+        ingredientWeightRepository.save(ingredientWeight);
         mealIngredientsService.addIngredientWeight(ingredientWeight);
         if(mealIngredientsService.ingredientsIsNull()){
-            mealRepository.findByName(mealIngredientsService.getName()).get().setIngredients(mealIngredientsService.getSetIngredients());
+            Meal meal = new Meal(mealIngredientsService.getMealForm());
+            meal.setIngredients(mealIngredientsService.getSetIngredients());
+            mealRepository.save(meal);
             mealIngredientsService.clear();
             attr.addFlashAttribute("info", "Dodano posiłek");
             return "redirect:/home";
@@ -104,10 +104,9 @@ public class MealController {
 
     @PostMapping("/addmeal")
     public String addMealPost(@ModelAttribute("meal") MealForm mealForm){
-        Meal meal = new Meal(mealForm);
         mealIngredientsService.setIngredients(mealForm.getIngredients());
         mealIngredientsService.setName(mealForm.getName());
-        mealRepository.save(meal);
+        mealIngredientsService.setMealForm(mealForm);
         return "redirect:/mealweight";
     }
 }
