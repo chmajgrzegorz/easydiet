@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj przepis</title>
+</head>
+<body>
+    <form th:action="@{/addmeal}" method="post" th:object="${meal}">
+        Nazwa: <input type="text" th:field="*{name}"/><br/>
+        Składniki: <select multiple th:field="*{ingredients}">
+            <option th:each="ingredient : ${ingredients}"
+                    th:value="${ingredient.id}"
+                    th:text="${ingredient.name}">
+            </option>
+    </select><br/>
+        Opis: <input type="text" th:field="*{description}"/><br/>
+        Zdjęcie: <input type="text" th:field="*{imageUrl}"/><br/>
+        Kategoria: <select th:field="*{category}">
+            <option th:each="cat : ${categories}"
+                    th:value="${cat.id}"
+                    th:text="${cat.name}"></option>
+        </select><br/>
+        <input type="submit" value="Dodaj"/>
+    </form>
+</body>
+</html>
