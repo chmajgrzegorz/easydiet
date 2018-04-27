@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @Controller
 public class MealController {
 
-
     UserInfoService userInfoService;
     MealsListService mealsListService;
     MealRepository mealRepository;
@@ -32,9 +31,9 @@ public class MealController {
     MealIngredientsService mealIngredientsService;
 
     @Autowired
-    public MealController(CategoryRepository categoryRepository, UserInfoService userInfoService, IngredientWeightRepository ingredientWeightRepository,
-                          MealsListService mealsListService, MealRepository mealRepository, IngredientRepository ingredientRepository,
-                          MealIngredientsService mealIngredientsService) {
+    public MealController(UserInfoService userInfoService, MealsListService mealsListService, MealRepository mealRepository,
+                          IngredientRepository ingredientRepository, CategoryRepository categoryRepository,
+                          IngredientWeightRepository ingredientWeightRepository, MealIngredientsService mealIngredientsService) {
         this.userInfoService = userInfoService;
         this.mealsListService = mealsListService;
         this.mealRepository = mealRepository;
@@ -44,7 +43,17 @@ public class MealController {
         this.mealIngredientsService = mealIngredientsService;
     }
 
+    @GetMapping("/meals")
+    public String showMeals(Model model, RedirectAttributes attr){
+        if(!userInfoService.isLogged()){
+            attr.addFlashAttribute("info", "Ta strona jest dostępna tylko dla zalogowanych użytkowników");
+            return "redirect:/login";
+        }
+        model.addAttribute("meals", mealRepository.findAll());
 
+
+        return "meals";
+    }
 
     @GetMapping("/mealweight")
     public String addMealWeight(Model model, RedirectAttributes attr){
@@ -77,17 +86,6 @@ public class MealController {
             return "redirect:/home";
         }
         return "redirect:/mealweight";
-    }
-
-
-    @GetMapping("/meals")
-    public String showMeals(RedirectAttributes attr){
-        if(!userInfoService.isLogged()){
-            attr.addFlashAttribute("info", "Ta strona jest dostępna tylko dla zalogowanych użytkowników");
-            return "redirect:/login";
-        }
-
-        return "meals";
     }
 
     @GetMapping("/addmeal")

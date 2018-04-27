@@ -7,7 +7,11 @@
 <body>
     <ul th:each="meal : ${meals}">
         <li th:text="${meal.name}"></li>
-        <li th:text="${meal.}"></li>
+        <ul th:each="ingredient : ${meal.ingredients}">
+            <li th:text="${ingredient.ingredient.name} + ': ' + ${ingredient.weight} + 'g'"></li>
+        </ul>
+        <li th:text="${meal.description}"></li>
+        <li><img th:src="${meal.imageUrl}"></li>
     </ul>
 
 </body>

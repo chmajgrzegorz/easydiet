@@ -13,7 +13,7 @@
                     th:text="${ingredient.name}">
             </option>
     </select><br/>
-        Opis: <input type="text" th:field="*{description}"/><br/>
+        Opis: <textarea th:field="*{description}"/><br/>
         Zdjęcie: <input type="text" th:field="*{imageUrl}"/><br/>
         Kategoria: <select th:field="*{category}">
             <option th:each="cat : ${categories}"

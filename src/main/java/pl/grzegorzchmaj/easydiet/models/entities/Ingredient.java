@@ -1,13 +1,14 @@
 package pl.grzegorzchmaj.easydiet.models.entities;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = {"id","ingredientWeights"})
 @NoArgsConstructor
 @Table(name = "ingredient")
 public class Ingredient {

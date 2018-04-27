@@ -3,6 +3,7 @@ package pl.grzegorzchmaj.easydiet.models.services;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class MealIngredientsService {
+
 
     private String name;
     private List<Ingredient> ingredients;
