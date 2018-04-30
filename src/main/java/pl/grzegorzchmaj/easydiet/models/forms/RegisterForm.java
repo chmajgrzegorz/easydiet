@@ -2,6 +2,7 @@ package pl.grzegorzchmaj.easydiet.models.forms;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.grzegorzchmaj.easydiet.enums.HowManyMeals;
 import pl.grzegorzchmaj.easydiet.enums.PhysicalActivity;
 import pl.grzegorzchmaj.easydiet.enums.Plans;
 import pl.grzegorzchmaj.easydiet.enums.Sex;
@@ -34,6 +35,7 @@ public class RegisterForm {
     private Integer age;
     private PhysicalActivity physicalActivity;
     private Plans plans;
+    private HowManyMeals meals;
 
 
 

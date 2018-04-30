@@ -3,6 +3,7 @@ package pl.grzegorzchmaj.easydiet.models.entities;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.grzegorzchmaj.easydiet.enums.HowManyMeals;
 import pl.grzegorzchmaj.easydiet.enums.PhysicalActivity;
 import pl.grzegorzchmaj.easydiet.enums.Plans;
 import pl.grzegorzchmaj.easydiet.enums.Sex;
@@ -30,6 +31,8 @@ public class User {
     private PhysicalActivity physicalActivity;
     @Enumerated(EnumType.STRING)
     private Plans plans;
+    @Enumerated(EnumType.STRING)
+    private HowManyMeals meals;
 
     public User(RegisterForm registerForm){
         this.login=registerForm.getLogin();
@@ -40,7 +43,18 @@ public class User {
         this.age=registerForm.getAge();
         this.physicalActivity=registerForm.getPhysicalActivity();
         this.plans=registerForm.getPlans();
+        this.meals=registerForm.getMeals();
     }
 
+    public User update(User user, RegisterForm registerForm){
+        user.weight=registerForm.getWeight();
+        user.height=registerForm.getHeight();
+        user.sex=registerForm.getSex();
+        user.age=registerForm.getAge();
+        user.physicalActivity=registerForm.getPhysicalActivity();
+        user.plans=registerForm.getPlans();
+        user.meals=registerForm.getMeals();
+        return user;
+    }
 
 }

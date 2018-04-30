@@ -9,7 +9,7 @@
     <h2 th:text="${info}"></h2>
 
     <h2>Edytuj swoje dane:</h2>
-    <form th:action=@{/register} method="post", th:object="${user}">
+    <form th:action=@{/update} method="post", th:object="${user}">
         <input type="hidden" placeholder="Login" th:field="*{login}"/><br/>
         <input type="hidden" placeholder="Hasło" th:field="*{password}"/><br/>
         <p th:if="${#fields.hasErrors('height')}" th:errors="*{height}"></p>
@@ -32,6 +32,11 @@
         <option th:each="plan : ${plans}"
                 th:value="${plan}"
                 th:text="${plan.description}"></option>
+    </select><br/>
+        Ilość posiłków w ciągu dnia: <select th:field="*{meals}">
+        <option th:each="meal : ${meals}"
+                th:value="${meal}"
+                th:text="${meal.howMany}"></option>
     </select><br/>
         <input type="submit" value="Zmień dane!"/>
     </form>

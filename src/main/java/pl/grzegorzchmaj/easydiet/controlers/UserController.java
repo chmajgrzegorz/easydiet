@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.grzegorzchmaj.easydiet.enums.HowManyMeals;
 import pl.grzegorzchmaj.easydiet.enums.PhysicalActivity;
 import pl.grzegorzchmaj.easydiet.enums.Plans;
 import pl.grzegorzchmaj.easydiet.enums.Sex;
@@ -41,6 +42,7 @@ public class UserController {
         model.addAttribute("sex", Sex.values());
         model.addAttribute("physicalActivity", PhysicalActivity.values());
         model.addAttribute("plans", Plans.values());
+        model.addAttribute("meals", HowManyMeals.values());
         return "register";
     }
 
@@ -58,6 +60,24 @@ public class UserController {
         userInfoService.setUser(user);
         userInfoService.setLogged(true);
         redirectAttributes.addFlashAttribute("info", "Zarejestrowałeś się poprawnie");
+        return "redirect:/home";
+    }
+
+    @PostMapping("/update")
+    public String afterUpdate(@ModelAttribute("registerForm") @Valid RegisterForm registerForm, BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes, Model model){
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("info", "Wypełnij poprawnie formularz");
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerForm", bindingResult);
+            redirectAttributes.addFlashAttribute("registerForm", registerForm);
+            return "redirect:/home";
+        }
+        User user = userRepository.findByLoginAndPassword(registerForm.getLogin(),registerForm.getPassword()).get();
+        user = user.update(user, registerForm);
+        userRepository.save(user);
+        userInfoService.setUser(user);
+        userInfoService.setLogged(true);
+        redirectAttributes.addFlashAttribute("info", "Dane zaktualizowane");
         return "redirect:/home";
     }
 

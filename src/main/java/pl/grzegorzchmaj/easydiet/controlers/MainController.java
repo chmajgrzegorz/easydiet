@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.grzegorzchmaj.easydiet.enums.HowManyMeals;
 import pl.grzegorzchmaj.easydiet.enums.PhysicalActivity;
 import pl.grzegorzchmaj.easydiet.enums.Plans;
 import pl.grzegorzchmaj.easydiet.enums.Sex;
@@ -27,8 +28,6 @@ public class MainController {
 
 
 
-
-
     @GetMapping("/home")
     public String home(RedirectAttributes attr, Model model){
         if(!userInfoService.isLogged()){
@@ -40,6 +39,7 @@ public class MainController {
         model.addAttribute("sex", Sex.values());
         model.addAttribute("physicalActivity", PhysicalActivity.values());
         model.addAttribute("plans", Plans.values());
+        model.addAttribute("meals", HowManyMeals.values());
         return "home";
     }
 }

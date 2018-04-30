@@ -6,12 +6,12 @@
 </head>
 <body>
     <ul th:each="meal : ${meals}">
-        <li th:text="${meal.name}"></li>
+        <li th:text="${meal.name} " style="font-size: large"></li>
         <ul th:each="ingredient : ${meal.ingredients}">
             <li th:text="${ingredient.ingredient.name} + ': ' + ${ingredient.weight} + 'g'"></li>
         </ul>
         <li th:text="${meal.description}"></li>
-        <li><img th:src="${meal.imageUrl}"></li>
+        <li><img th:src="${meal.imageUrl}" height="400px"></li>
     </ul>
 
 </body>

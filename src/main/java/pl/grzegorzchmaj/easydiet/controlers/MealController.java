@@ -9,21 +9,17 @@ import pl.grzegorzchmaj.easydiet.models.entities.IngredientWeight;
 import pl.grzegorzchmaj.easydiet.models.entities.Meal;
 import pl.grzegorzchmaj.easydiet.models.forms.MealForm;
 import pl.grzegorzchmaj.easydiet.models.services.MealIngredientsService;
-import pl.grzegorzchmaj.easydiet.models.services.MealsListService;
 import pl.grzegorzchmaj.easydiet.models.services.UserInfoService;
 import pl.grzegorzchmaj.easydiet.repositories.CategoryRepository;
 import pl.grzegorzchmaj.easydiet.repositories.IngredientRepository;
 import pl.grzegorzchmaj.easydiet.repositories.IngredientWeightRepository;
 import pl.grzegorzchmaj.easydiet.repositories.MealRepository;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class MealController {
 
     UserInfoService userInfoService;
-    MealsListService mealsListService;
     MealRepository mealRepository;
     IngredientRepository ingredientRepository;
     CategoryRepository categoryRepository;
@@ -31,11 +27,10 @@ public class MealController {
     MealIngredientsService mealIngredientsService;
 
     @Autowired
-    public MealController(UserInfoService userInfoService, MealsListService mealsListService, MealRepository mealRepository,
+    public MealController(UserInfoService userInfoService,MealRepository mealRepository,
                           IngredientRepository ingredientRepository, CategoryRepository categoryRepository,
                           IngredientWeightRepository ingredientWeightRepository, MealIngredientsService mealIngredientsService) {
         this.userInfoService = userInfoService;
-        this.mealsListService = mealsListService;
         this.mealRepository = mealRepository;
         this.ingredientRepository = ingredientRepository;
         this.categoryRepository = categoryRepository;
