@@ -23,7 +23,7 @@ public class Diet {
     @Id
     @GeneratedValue
     private Long id;
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToMany
