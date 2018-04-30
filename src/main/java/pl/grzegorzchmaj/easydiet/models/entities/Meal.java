@@ -1,15 +1,16 @@
 package pl.grzegorzchmaj.easydiet.models.entities;
 
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import pl.grzegorzchmaj.easydiet.models.forms.MealForm;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = {"mealInfo"})
 @NoArgsConstructor
 @Table(name = "meal")
 public class Meal {
@@ -28,6 +29,9 @@ public class Meal {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "meal", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<MealInfo> mealInfo;
 
     public Meal(MealForm mealForm) {
         this.name = mealForm.getName();

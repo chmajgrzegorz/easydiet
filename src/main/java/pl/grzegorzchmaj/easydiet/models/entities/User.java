@@ -33,6 +33,8 @@ public class User {
     private Plans plans;
     @Enumerated(EnumType.STRING)
     private HowManyMeals meals;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Diet diet;
 
     public User(RegisterForm registerForm){
         this.login=registerForm.getLogin();
