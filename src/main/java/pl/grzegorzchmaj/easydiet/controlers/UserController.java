@@ -73,7 +73,7 @@ public class UserController {
             return "redirect:/home";
         }
         User user = userRepository.findByLoginAndPassword(registerForm.getLogin(),registerForm.getPassword()).get();
-        user = user.update(user, registerForm);
+        user.update(registerForm);
         userRepository.save(user);
         userInfoService.setUser(user);
         userInfoService.setLogged(true);

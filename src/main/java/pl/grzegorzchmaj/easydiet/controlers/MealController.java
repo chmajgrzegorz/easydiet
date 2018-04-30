@@ -96,7 +96,11 @@ public class MealController {
     }
 
     @PostMapping("/addmeal")
-    public String addMealPost(@ModelAttribute("meal") MealForm mealForm){
+    public String addMealPost(@ModelAttribute("meal") MealForm mealForm, RedirectAttributes attr){
+        if(!userInfoService.isLogged()){
+            attr.addFlashAttribute("info", "Ta strona jest dostępna tylko dla zalogowanych użytkowników");
+            return "redirect:/login";
+        }
         mealIngredientsService.setIngredients(mealForm.getIngredients());
         mealIngredientsService.setName(mealForm.getName());
         mealIngredientsService.setMealForm(mealForm);

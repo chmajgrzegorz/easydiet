@@ -1,10 +1,16 @@
 package pl.grzegorzchmaj.easydiet.models.entities;
 
 import lombok.*;
+import pl.grzegorzchmaj.easydiet.models.forms.DietForm;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Entity
 @Getter
@@ -20,11 +26,17 @@ public class Diet {
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name = "user_id")
     private User user;
-    private String description;
     @ManyToMany
     @JoinTable(name = "diet_meal_info", joinColumns = @JoinColumn(name = "diet_id"),
             inverseJoinColumns = @JoinColumn(name = "meal_info_id"))
-    private List<MealInfo> meals;
-    private Date startDate;
-    private Date endDate;
+    private List<MealInfo> meals = new ArrayList<>();
+    private LocalDate startDate;
+    private LocalDate endDate;
+
+    public Diet(DietForm dietForm){
+        this.user = dietForm.getUser();
+        this.startDate = dietForm.getStartDate().toLocalDate();
+        this.endDate = dietForm.getEndDate().toLocalDate();
+    }
+
 }

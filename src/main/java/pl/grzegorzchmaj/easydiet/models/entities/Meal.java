@@ -29,8 +29,7 @@ public class Meal {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-
-    @OneToMany(mappedBy = "meal", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "meal", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REMOVE})
     private List<MealInfo> mealInfo;
 
     public Meal(MealForm mealForm) {

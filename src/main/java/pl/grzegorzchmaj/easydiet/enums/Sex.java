@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public enum Sex {
     WOMAN("Kobieta", 'K'),
-    MAN("Mężczyzna", 'K');
+    MAN("Mężczyzna", 'M');
 
     private String description;
     private char sex;

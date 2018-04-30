@@ -35,6 +35,7 @@ public class User {
     private HowManyMeals meals;
     @OneToOne(cascade = CascadeType.ALL)
     private Diet diet;
+    private int calories;
 
     public User(RegisterForm registerForm){
         this.login=registerForm.getLogin();
@@ -46,17 +47,36 @@ public class User {
         this.physicalActivity=registerForm.getPhysicalActivity();
         this.plans=registerForm.getPlans();
         this.meals=registerForm.getMeals();
+        if(registerForm.getSex().getSex()== 'K'){
+            this.calories=(int)((655.1+(9.567*registerForm.getWeight())+1.85*registerForm.getHeight()
+            -4.68*registerForm.getAge())*registerForm.getPhysicalActivity().getLevel()
+                    +registerForm.getPlans().getCalories());
+        }
+        else{
+            this.calories=(int)((66.47+(13.7*registerForm.getWeight())+5*registerForm.getHeight()
+                    -6.76*registerForm.getAge())*registerForm.getPhysicalActivity().getLevel()
+                    +registerForm.getPlans().getCalories());
+        }
     }
 
-    public User update(User user, RegisterForm registerForm){
-        user.weight=registerForm.getWeight();
-        user.height=registerForm.getHeight();
-        user.sex=registerForm.getSex();
-        user.age=registerForm.getAge();
-        user.physicalActivity=registerForm.getPhysicalActivity();
-        user.plans=registerForm.getPlans();
-        user.meals=registerForm.getMeals();
-        return user;
+    public void update(RegisterForm registerForm){
+        this.weight=registerForm.getWeight();
+        this.height=registerForm.getHeight();
+        this.sex=registerForm.getSex();
+        this.age=registerForm.getAge();
+        this.physicalActivity=registerForm.getPhysicalActivity();
+        this.plans=registerForm.getPlans();
+        this.meals=registerForm.getMeals();
+        if(registerForm.getSex().getSex()== 'K'){
+            this.calories=(int)((655.1+(9.567*registerForm.getWeight())+1.85*registerForm.getHeight()
+                    -4.68*registerForm.getAge())*registerForm.getPhysicalActivity().getLevel()
+                    +registerForm.getPlans().getCalories());
+        }
+        else{
+            this.calories=(int)((66.47+(13.7*registerForm.getWeight())+5*registerForm.getHeight()
+                    -6.76*registerForm.getAge())*registerForm.getPhysicalActivity().getLevel()
+                    +registerForm.getPlans().getCalories());
+        }
     }
 
 }
