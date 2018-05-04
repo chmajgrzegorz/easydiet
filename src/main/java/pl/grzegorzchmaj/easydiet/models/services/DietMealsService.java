@@ -26,7 +26,8 @@ public class DietMealsService {
         Long days = DAYS.between(diet.getStartDate(), diet.getEndDate())+1;
         for (int i = 0; i < days; i++) {
             for(int j = 0 ; j<diet.getUser().getMeals().getHowMany() ; j++){
-                meals.add(new MealInfo(diet.getStartDate().plusDays(i),"Posiłek"  + j+1));
+                j+=1;
+                meals.add(new MealInfo(diet.getStartDate().plusDays(i),"Posiłek " + j));
             }
         }
     }

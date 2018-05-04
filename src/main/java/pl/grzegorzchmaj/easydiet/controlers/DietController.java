@@ -13,6 +13,7 @@ import pl.grzegorzchmaj.easydiet.models.forms.DietForm;
 import pl.grzegorzchmaj.easydiet.models.services.DietMealsService;
 import pl.grzegorzchmaj.easydiet.models.services.UserInfoService;
 import pl.grzegorzchmaj.easydiet.repositories.DietRepository;
+import pl.grzegorzchmaj.easydiet.repositories.IngredientRepository;
 import pl.grzegorzchmaj.easydiet.repositories.UserRepository;
 
 import java.util.Optional;
@@ -25,14 +26,17 @@ public class DietController {
     DietRepository dietRepository;
     UserRepository userRepository;
     DietMealsService dietMealsService;
+    IngredientRepository ingredientRepository;
 
     @Autowired
     public DietController(UserInfoService userInfoService, DietRepository dietRepository,
-                          UserRepository userRepository, DietMealsService dietMealsService) {
+                          UserRepository userRepository, IngredientRepository ingredientRepository,
+                          DietMealsService dietMealsService) {
         this.userInfoService = userInfoService;
         this.dietRepository = dietRepository;
         this.userRepository = userRepository;
         this.dietMealsService = dietMealsService;
+        this.ingredientRepository = ingredientRepository;
     }
 
     @GetMapping("/creatediet")
@@ -82,5 +86,6 @@ public class DietController {
         model.addAttribute("meals", dietMealsService.getMeals());
         return "creatediet";
     }
+
 }
 
