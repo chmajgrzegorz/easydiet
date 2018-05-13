@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Twoja dieta</title>
+</head>
+<body>
+<h1 th:text="'Twoja dieta od ' + ${diet.startDate} + ' do ' + ${diet.endDate}"></h1>
+
+<div th:each=" date : ${dates}">
+    <a th:text="${date}" th:href="@{'/diet/' + ${date}}"></a>
+</div>
+
+<ul th:each="mealInfo : ${mealsInfo}">
+    <li th:text="${mealInfo.date} + ' ' + ${mealInfo.name}"></li>
+    <li th:text="${mealInfo.meal.name}"/>
+    <ul th:each="ingredient : ${mealInfo.meal.ingredients}">
+        <li th:text="${ingredient.ingredient.name} + ': ' + ${ingredient.weight} + 'g'"></li>
+    </ul>
+    <li th:utext="${mealInfo.meal.description}"></li>
+    <li><img th:src="${mealInfo.meal.imageUrl}" height="400px"></li>
+</ul>
+
+</body>
+</html>

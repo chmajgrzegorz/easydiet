@@ -13,18 +13,5 @@
         Koniec:<input type="date" th:field="*{endDate}"><br/>
         <input type="submit" value="Stwórz dietę">
     </form>
-    <h1 th:text="${info2}"></h1>
-    <table>
-        <tr>
-            <th>NAZWA</th>
-            <th>DATA</th>
-            <th> </th>
-        </tr>
-        <tr th:each="meal : ${meals}">
-            <td th:text="${meal.name}"></td>
-            <td th:text="${meal.date}"></td>
-            <td>Dodaj posiłek</td>
-        </tr>
-    </table>
 </body>
 </html>
