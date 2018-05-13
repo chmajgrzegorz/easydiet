@@ -1,9 +1,6 @@
 package pl.grzegorzchmaj.easydiet.models.entities;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -16,13 +13,14 @@ import java.util.List;
 @EqualsAndHashCode(exclude = {"id","diet"})
 @NoArgsConstructor
 @Table(name = "meal_info")
+@ToString(exclude = {"diet"})
 public class MealInfo {
 
     @Id
     @GeneratedValue
     private Long id;
     private LocalDate date;
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "meal_id")
     private Meal meal;
     private String name;
@@ -31,8 +29,9 @@ public class MealInfo {
             inverseJoinColumns = @JoinColumn(name = "diet_id"))
     private List<Diet> diet;
 
-    public MealInfo(LocalDate date, String description) {
+    public MealInfo(LocalDate date, String description, Meal meal) {
         this.date = date;
         this.name = description;
+        this.meal = meal;
     }
 }

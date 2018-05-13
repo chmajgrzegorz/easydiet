@@ -1,8 +1,6 @@
 package pl.grzegorzchmaj.easydiet.models.entities;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import pl.grzegorzchmaj.easydiet.enums.HowManyMeals;
 import pl.grzegorzchmaj.easydiet.enums.PhysicalActivity;
 import pl.grzegorzchmaj.easydiet.enums.Plans;
@@ -12,9 +10,11 @@ import pl.grzegorzchmaj.easydiet.models.forms.RegisterForm;
 import javax.persistence.*;
 
 @Entity
-@Data
 @NoArgsConstructor
 @Table(name = "user")
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = {"id"})
 public class User {
 
     @Id
@@ -33,7 +33,7 @@ public class User {
     private Plans plans;
     @Enumerated(EnumType.STRING)
     private HowManyMeals meals;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Diet diet;
     private int calories;
 

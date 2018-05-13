@@ -10,9 +10,10 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"mealInfo"})
+@EqualsAndHashCode(exclude = {"mealInfo", "id"})
 @NoArgsConstructor
 @Table(name = "meal")
+@ToString(exclude = {"mealInfo"})
 public class Meal {
 
     @Id
@@ -29,7 +30,7 @@ public class Meal {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-    @OneToMany(mappedBy = "meal", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MealInfo> mealInfo;
 
     public Meal(MealForm mealForm) {

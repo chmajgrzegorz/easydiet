@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.grzegorzchmaj.easydiet.models.entities.Ingredient;
 import pl.grzegorzchmaj.easydiet.models.entities.IngredientWeight;
 import pl.grzegorzchmaj.easydiet.models.entities.Meal;
 import pl.grzegorzchmaj.easydiet.models.forms.MealForm;
@@ -16,6 +17,8 @@ import pl.grzegorzchmaj.easydiet.repositories.IngredientRepository;
 import pl.grzegorzchmaj.easydiet.repositories.IngredientWeightRepository;
 import pl.grzegorzchmaj.easydiet.repositories.MealRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 

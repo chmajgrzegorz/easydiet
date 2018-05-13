@@ -29,8 +29,8 @@ public class MealIngredientsService {
 
     public void clear() {
         this.name = null;
-        this.ingredients = null;
-        this.setIngredients = null;
+        this.ingredients = new ArrayList<>();
+        this.setIngredients = new ArrayList<>();
         this.mealForm = null;
     }
 

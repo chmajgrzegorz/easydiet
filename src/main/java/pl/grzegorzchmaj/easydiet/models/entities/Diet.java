@@ -18,15 +18,16 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @EqualsAndHashCode(exclude = {"id","user"})
 @NoArgsConstructor
 @Table(name = "diet")
+@ToString(exclude = {"id", "user"})
 public class Diet {
 
     @Id
     @GeneratedValue
     private Long id;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.DETACH}, orphanRemoval = false)
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "diet_meal_info", joinColumns = @JoinColumn(name = "diet_id"),
             inverseJoinColumns = @JoinColumn(name = "meal_info_id"))
     private List<MealInfo> meals = new ArrayList<>();
