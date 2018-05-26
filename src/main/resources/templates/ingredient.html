@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj składnik</title>
+</head>
+<body>
+    <form method="post" th:object="${ingredient}" th:action="@{/ingredient}">
+        Nazwa: <input type="text" th:field="*{name}"><br/>
+        Calorie na 100g: <input type="text" th:field="*{caloriesPer100g}"><br/>
+        Węglowodany na 100g: <input type="text" th:field="*{carbohydratePer100g}"><br/>
+        Białko na 100g: <input type="text" th:field="*{proteinPer100g}"><br/>
+        Tłuszcze na 100g: <input type="text" th:field="*{fatPer100g}"><br/>
+        <input type="submit" value="Dodaj składnik"/>
+    </form>
+</body>
+</html>
