@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "meal_info")
 @ToString(exclude = {"diet"})
-public class MealInfo {
+public class MealInfo implements Comparable<MealInfo>{
 
     @Id
     @GeneratedValue
@@ -33,5 +33,10 @@ public class MealInfo {
         this.date = date;
         this.name = description;
         this.meal = meal;
+    }
+
+    @Override
+    public int compareTo(MealInfo o) {
+        return getName().compareTo(o.getName());
     }
 }

@@ -11,7 +11,13 @@ import java.util.Optional;
 public interface MealRepository extends JpaRepository<Meal, Long> {
     Optional<Meal> findByName(String name);
 
-    @Query(value = "SELECT * FROM meal ORDER BY RAND() LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM meal  WHERE category_id = 1 ORDER BY RAND() LIMIT 1", nativeQuery = true)
+    Meal findRandomBreakfast();
+
+    @Query(value = "SELECT * FROM meal  WHERE category_id = 2 ORDER BY RAND() LIMIT 1", nativeQuery = true)
     Meal findRandomMeal();
+
+    @Query(value = "SELECT * FROM meal  WHERE category_id = 6 ORDER BY RAND() LIMIT 1", nativeQuery = true)
+    Meal findRandomDinner();
 
 }
