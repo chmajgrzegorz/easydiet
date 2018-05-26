@@ -82,6 +82,7 @@ public class MealController {
         if(mealIngredientsService.ingredientsIsNull()){
             Meal meal = new Meal(mealIngredientsService.getMealForm());
             meal.setIngredients(mealIngredientsService.getSetIngredients());
+            meal.setCalories(mealIngredientsService.setMealCalories());
             mealRepository.save(meal);
             mealIngredientsService.clear();
             attr.addFlashAttribute("info", "Dodano posiłek");

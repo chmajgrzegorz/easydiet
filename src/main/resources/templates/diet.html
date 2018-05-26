@@ -14,6 +14,7 @@
 <ul th:each="mealInfo : ${mealsInfo}">
     <li th:text="${mealInfo.date} + ' ' + ${mealInfo.name}"></li>
     <li th:text="${mealInfo.meal.name}"/>
+    <li th:text="'Kalorie: ' + ${mealInfo.meal.calories}"/>
     <ul th:each="ingredient : ${mealInfo.meal.ingredients}">
         <li th:text="${ingredient.ingredient.name} + ': ' + ${ingredient.weight} + 'g'"></li>
     </ul>

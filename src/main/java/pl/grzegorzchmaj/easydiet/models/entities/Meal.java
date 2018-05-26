@@ -32,6 +32,7 @@ public class Meal {
     private Category category;
     @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MealInfo> mealInfo;
+    private Integer calories;
 
     public Meal(MealForm mealForm) {
         this.name = mealForm.getName();

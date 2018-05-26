@@ -8,10 +8,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 import pl.grzegorzchmaj.easydiet.enums.HowManyMeals;
-import pl.grzegorzchmaj.easydiet.models.entities.Diet;
-import pl.grzegorzchmaj.easydiet.models.entities.Meal;
-import pl.grzegorzchmaj.easydiet.models.entities.MealInfo;
-import pl.grzegorzchmaj.easydiet.models.entities.User;
+import pl.grzegorzchmaj.easydiet.models.entities.*;
 import pl.grzegorzchmaj.easydiet.repositories.DietRepository;
 import pl.grzegorzchmaj.easydiet.repositories.MealInfoRepository;
 import pl.grzegorzchmaj.easydiet.repositories.MealRepository;
@@ -19,6 +16,7 @@ import pl.grzegorzchmaj.easydiet.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -50,7 +48,7 @@ public class DietMealsService {
         User user= userInfoService.getUser();
         Long days = DAYS.between(diet.getStartDate(), diet.getEndDate())+1;
         for (int i = 0; i < days; i++) {
-            for(int j = 1 ; j<diet.getUser().getMeals().getHowMany() ; j++){
+            for(int j = 1 ; j<=diet.getUser().getMeals().getHowMany() ; j++){
                 meals.add(new MealInfo(diet.getStartDate().plusDays(i),"Posiłek " + j, adjustMeal(user.getMeals(), j)));
                 mealInfoRepository.save(meals.get(meals.size()-1));
             }
@@ -63,54 +61,58 @@ public class DietMealsService {
     public Meal adjustMeal(HowManyMeals howManyMeals, int numberOfMeal){
         switch(numberOfMeal){
             case 1:
-                return adjustCalories(mealRepository.findRandomBreakfast(),howManyMeals, numberOfMeal);
+                return mealRepository.findRandomBreakfast();
             case 2:
                 switch(howManyMeals.getHowMany()){
                     case 3:
-                        return adjustCalories(mealRepository.findRandomDinner(),howManyMeals, numberOfMeal);
+                        return mealRepository.findRandomDinner();
                     default:
-                        return adjustCalories(mealRepository.findRandomMeal(),howManyMeals, numberOfMeal);
+                        return mealRepository.findRandomMeal();
                 }
             case 3:
                 switch(howManyMeals.getHowMany()){
                     case 3:
-                        return adjustCalories(mealRepository.findRandomMeal(),howManyMeals, numberOfMeal);
+                        return mealRepository.findRandomMeal();
                     default:
-                        return adjustCalories(mealRepository.findRandomDinner(),howManyMeals, numberOfMeal);
+                        return mealRepository.findRandomDinner();
                 }
             case 4:
-                return adjustCalories(mealRepository.findRandomMeal(),howManyMeals, numberOfMeal);
+                return mealRepository.findRandomMeal();
             case 5:
-                return adjustCalories(mealRepository.findRandomMeal(),howManyMeals, numberOfMeal);
+                return mealRepository.findRandomMeal();
             default:
                 return new Meal();
         }
     }
 
-    public Meal adjustCalories(Meal previousMeal, HowManyMeals howManyMeals, int numberOfMeal){
-        Meal meal = new Meal();
-        meal = previousMeal;
-        int calories = userInfoService.getUser().getCalories();
-        switch(numberOfMeal){
-            case 1:
-                meal.getIngredients().forEach(s -> s.setWeight(howManyMeals.getCaloriesPercentage1()*calories/s.getWeight()));
-                return meal;
-            case 2:
-                meal.getIngredients().forEach(s -> s.setWeight(howManyMeals.getCaloriesPercentage2()*calories/s.getWeight()));
-                return meal;
-            case 3:
-                meal.getIngredients().forEach(s -> s.setWeight(howManyMeals.getCaloriesPercentage3()*calories/s.getWeight()));
-                return meal;
-            case 4:
-                meal.getIngredients().forEach(s -> s.setWeight(howManyMeals.getCaloriesPercentage4()*calories/s.getWeight()));
-                return meal;
-            case 5:
-                meal.getIngredients().forEach(s -> s.setWeight(howManyMeals.getCaloriesPercentage5()*calories/s.getWeight()));
-                return meal;
-            default:
-                return new Meal();
+    public List<MealInfo> adjustIngredients(List<MealInfo> meals){
+        User user = userInfoService.getUser();
+        for (MealInfo meal : meals) {
+            switch(meal.getName()){
+                case "Posiłek 1":
+                    meal.getMeal().getIngredients().forEach(s -> s.setWeight((long)(user.getMeals().getCaloriesPercentage1()*user.getCalories()/meal.getMeal().getCalories()*s.getWeight())));
+                    meal.getMeal().setCalories((int)(meal.getMeal().getCalories()*user.getMeals().getCaloriesPercentage1()*user.getCalories()/meal.getMeal().getCalories()));
+                    break;
+                case "Posiłek 2":
+                    meal.getMeal().getIngredients().forEach(s -> s.setWeight((long)(user.getMeals().getCaloriesPercentage2()*user.getCalories()/meal.getMeal().getCalories()*s.getWeight())));
+                    meal.getMeal().setCalories((int)(meal.getMeal().getCalories()*user.getMeals().getCaloriesPercentage2()*user.getCalories()/meal.getMeal().getCalories()));
+                    break;
+                case "Posiłek 3":
+                    meal.getMeal().getIngredients().forEach(s -> s.setWeight((long)(user.getMeals().getCaloriesPercentage3()*user.getCalories()/meal.getMeal().getCalories()*s.getWeight())));
+                    meal.getMeal().setCalories((int)(meal.getMeal().getCalories()*user.getMeals().getCaloriesPercentage3()*user.getCalories()/meal.getMeal().getCalories()));
+                    break;
+                case "Posiłek 4":
+                    meal.getMeal().getIngredients().forEach(s -> s.setWeight((long)(user.getMeals().getCaloriesPercentage4()*user.getCalories()/meal.getMeal().getCalories()*s.getWeight())));
+                    meal.getMeal().setCalories((int)(meal.getMeal().getCalories()*user.getMeals().getCaloriesPercentage4()*user.getCalories()/meal.getMeal().getCalories()));
+                    break;
+                case "Posiłek 5":
+                    meal.getMeal().getIngredients().forEach(s -> s.setWeight((long)(user.getMeals().getCaloriesPercentage5()*user.getCalories()/meal.getMeal().getCalories()*s.getWeight())));
+                    meal.getMeal().setCalories((int)(meal.getMeal().getCalories()*user.getMeals().getCaloriesPercentage5()*user.getCalories()/meal.getMeal().getCalories()));
+                    break;
+                default:
+            }
         }
-
+        return meals;
     }
 
     public void saveDietToUser(Diet diet){
