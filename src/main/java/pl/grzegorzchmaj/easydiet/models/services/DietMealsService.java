@@ -14,8 +14,7 @@ import pl.grzegorzchmaj.easydiet.repositories.MealInfoRepository;
 import pl.grzegorzchmaj.easydiet.repositories.MealRepository;
 import pl.grzegorzchmaj.easydiet.repositories.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -47,9 +46,17 @@ public class DietMealsService {
     public void setMealsToDiet(Diet diet){
         User user= userInfoService.getUser();
         Long days = DAYS.between(diet.getStartDate(), diet.getEndDate())+1;
+        MealInfo meal;
         for (int i = 0; i < days; i++) {
-            for(int j = 1 ; j<=diet.getUser().getMeals().getHowMany() ; j++){
-                meals.add(new MealInfo(diet.getStartDate().plusDays(i),"Posiłek " + j, adjustMeal(user.getMeals(), j)));
+            mealFor: for (int j = 1 ; j<=diet.getUser().getMeals().getHowMany() ; j++){
+                meal = new MealInfo(diet.getStartDate().plusDays(i),"Posiłek " + j, adjustMeal(user.getMeals(), j));
+                for (MealInfo mealInfo : meals) {
+                    if(mealInfo.getMeal().getId() == meal.getMeal().getId()){
+                        j--;
+                        continue mealFor;
+                    }
+                }
+                meals.add(meal);
                 mealInfoRepository.save(meals.get(meals.size()-1));
             }
         }
@@ -59,30 +66,30 @@ public class DietMealsService {
     }
 
     public Meal adjustMeal(HowManyMeals howManyMeals, int numberOfMeal){
-        switch(numberOfMeal){
-            case 1:
-                return mealRepository.findRandomBreakfast();
-            case 2:
-                switch(howManyMeals.getHowMany()){
-                    case 3:
-                        return mealRepository.findRandomDinner();
-                    default:
-                        return mealRepository.findRandomMeal();
-                }
-            case 3:
-                switch(howManyMeals.getHowMany()){
-                    case 3:
-                        return mealRepository.findRandomMeal();
-                    default:
-                        return mealRepository.findRandomDinner();
-                }
-            case 4:
-                return mealRepository.findRandomMeal();
-            case 5:
-                return mealRepository.findRandomMeal();
-            default:
-                return new Meal();
-        }
+            switch (numberOfMeal) {
+                case 1:
+                    return mealRepository.findRandomBreakfast();
+                case 2:
+                    switch (howManyMeals.getHowMany()) {
+                        case 3:
+                            return mealRepository.findRandomDinner();
+                        default:
+                            return mealRepository.findRandomMeal();
+                    }
+                case 3:
+                    switch (howManyMeals.getHowMany()) {
+                        case 3:
+                            return mealRepository.findRandomMeal();
+                        default:
+                            return mealRepository.findRandomDinner();
+                    }
+                case 4:
+                    return mealRepository.findRandomMeal();
+                case 5:
+                    return mealRepository.findRandomMeal();
+                default:
+                    return new Meal();
+            }
     }
 
     public List<MealInfo> adjustIngredients(List<MealInfo> meals){

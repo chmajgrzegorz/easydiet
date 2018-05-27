@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public enum HowManyMeals {
-    THREE(3,0.3,0.45,0.25),
+    THREE(3,0.3,0.40,0.30),
     FOUR(4,0.25,0.20,0.35,0.20),
     FIVE(5,0.20,0.15,0.30,0.15,0.20);
 

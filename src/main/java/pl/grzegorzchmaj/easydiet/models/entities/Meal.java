@@ -6,6 +6,7 @@ import pl.grzegorzchmaj.easydiet.models.forms.MealForm;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
