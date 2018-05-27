@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import pl.grzegorzchmaj.easydiet.enums.HowManyMeals;
 import pl.grzegorzchmaj.easydiet.models.entities.*;
@@ -63,6 +64,7 @@ public class DietMealsService {
         diet.setMeals(meals);
         dietRepository.save(diet);
         saveDietToUser(diet);
+        meals.clear();
     }
 
     public Meal adjustMeal(HowManyMeals howManyMeals, int numberOfMeal){

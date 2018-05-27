@@ -24,7 +24,7 @@ public class MealInfo implements Comparable<MealInfo>{
     @JoinColumn(name = "meal_id")
     private Meal meal;
     private String name;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "diet_meal_info", joinColumns = @JoinColumn(name = "meal_info_id"),
             inverseJoinColumns = @JoinColumn(name = "diet_id"))
     private List<Diet> diet;

@@ -11,6 +11,7 @@ import java.util.List;
 @EqualsAndHashCode(exclude = {"id","ingredientWeights"})
 @NoArgsConstructor
 @Table(name = "ingredient")
+@ToString(exclude = {"id","caloriesPer100g","proteinPer100g","carbohydratePer100g","fatPer100g","ingredientWeights"})
 public class Ingredient {
 
     @Id

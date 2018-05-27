@@ -27,7 +27,7 @@ public class Diet {
     @OneToOne(cascade = {CascadeType.DETACH}, orphanRemoval = false)
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JoinTable(name = "diet_meal_info", joinColumns = @JoinColumn(name = "diet_id"),
             inverseJoinColumns = @JoinColumn(name = "meal_info_id"))
     private List<MealInfo> meals = new ArrayList<>();

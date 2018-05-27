@@ -7,6 +7,7 @@
 <body>
     <ul th:each="meal : ${meals}">
         <li th:text="${meal.name} " style="font-size: large"></li>
+        <li th:text="${'Kalorie: ' + meal.calories}"/>
         <ul th:each="ingredient : ${meal.ingredients}">
             <li th:text="${ingredient.ingredient.name} + ': ' + ${ingredient.weight} + 'g'"></li>
         </ul>

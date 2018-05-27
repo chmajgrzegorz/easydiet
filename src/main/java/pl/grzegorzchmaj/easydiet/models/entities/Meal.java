@@ -21,7 +21,7 @@ public class Meal {
     @GeneratedValue
     private Long id;
     private String name;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "meal_ingredient", joinColumns = @JoinColumn(name = "meal_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     private List<IngredientWeight> ingredients;
