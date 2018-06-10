@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Zakupów</title>
+</head>
+<body>
+
+<div style="text-align: center;">
+    <table>
+        <tr>
+            <th>Składnik:</th>
+            <th>Waga:</th>
+        </tr>
+        <tr th:each="instance : ${shoppingList}">
+            <td th:text="${instance.key.name}"></td>
+            <td th:text="${instance.value} + 'g' "></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

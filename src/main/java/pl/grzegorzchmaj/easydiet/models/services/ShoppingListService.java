@@ -2,13 +2,10 @@ package pl.grzegorzchmaj.easydiet.models.services;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import pl.grzegorzchmaj.easydiet.models.entities.Ingredient;
 import pl.grzegorzchmaj.easydiet.models.entities.MealInfo;
@@ -21,7 +18,7 @@ import java.util.*;
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Data
 @NoArgsConstructor
-@Transactional
+
 public class ShoppingListService {
 
     Map<Ingredient, Long> shoppingList = new HashMap<>();
@@ -42,12 +39,9 @@ public class ShoppingListService {
         user = userRepository.findByLoginAndPassword(userInfoService.getUser().getLogin(),userInfoService.getUser().getPassword()).get();
         shoppingList.clear();
         meals.clear();
-        System.out.println("Wyczyszczona mapa: " + shoppingList);
         meals = user.getDiet().getMeals();
-        System.out.println("Meals: " + meals);
         meals=dietMealsService.adjustIngredients(meals);
         for (MealInfo meal : meals) {
-            System.out.println("Meal: " + meal.getName());
             meal.getMeal().getIngredients().forEach(s -> {
                 if(shoppingList.containsKey(s.getIngredient()))
                     shoppingList.put(s.getIngredient(), s.getWeight()+shoppingList.get(s.getIngredient()));
