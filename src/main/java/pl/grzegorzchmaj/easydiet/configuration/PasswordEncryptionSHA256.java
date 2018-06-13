@@ -24,6 +24,10 @@ public class PasswordEncryptionSHA256 implements IPasswordEncryption {
         {
             e.printStackTrace();
         }
+        catch(NullPointerException e)
+        {
+            throw new NullPointerException();
+        }
         return generatedPassword;
 
     }
