@@ -17,6 +17,7 @@ import pl.grzegorzchmaj.easydiet.models.entities.User;
 import pl.grzegorzchmaj.easydiet.models.forms.LoginForm;
 import pl.grzegorzchmaj.easydiet.models.forms.RegisterForm;
 import pl.grzegorzchmaj.easydiet.models.services.UserInfoService;
+import pl.grzegorzchmaj.easydiet.passwordencryption.PasswordEncryptionSHA256;
 import pl.grzegorzchmaj.easydiet.repositories.UserRepository;
 
 import javax.validation.Valid;
@@ -25,13 +26,16 @@ import java.util.Optional;
 @Controller
 public class UserController {
 
-    UserRepository userRepository;
-    UserInfoService userInfoService;
+    private UserRepository userRepository;
+    private UserInfoService userInfoService;
+    private PasswordEncryptionSHA256 passwordEncryptionSHA256;
 
     @Autowired
-    public UserController(UserRepository userRepository, UserInfoService userInfoService) {
+    public UserController(UserRepository userRepository, UserInfoService userInfoService,
+                          PasswordEncryptionSHA256 passwordEncryptionSHA256) {
         this.userRepository = userRepository;
         this.userInfoService = userInfoService;
+        this.passwordEncryptionSHA256 = passwordEncryptionSHA256;
     }
 
     @GetMapping("/register")
@@ -56,6 +60,7 @@ public class UserController {
             return "redirect:/register";
         }
         User user = new User(registerForm);
+        user.setPassword(passwordEncryptionSHA256.generate(user.getPassword()));
         userRepository.save(user);
         userInfoService.setUser(user);
         userInfoService.setLogged(true);
@@ -72,7 +77,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("registerForm", registerForm);
             return "redirect:/home";
         }
-        User user = userRepository.findByLoginAndPassword(registerForm.getLogin(),registerForm.getPassword()).get();
+        User user = userRepository.findByLoginAndPassword(registerForm.getLogin(),passwordEncryptionSHA256.generate(registerForm.getPassword())).get();
         user.update(registerForm);
         userRepository.save(user);
         userInfoService.setUser(user);
@@ -89,7 +94,7 @@ public class UserController {
 
     @PostMapping("/login")
     public String afterLogin(@RequestParam("login") String login, @RequestParam("password") String password, RedirectAttributes attr, Model model){
-        Optional<User> logged =  userRepository.findByLoginAndPassword(login, password);
+        Optional<User> logged =  userRepository.findByLoginAndPassword(login, passwordEncryptionSHA256.generate(password));
         if(logged.isPresent()) {
             userInfoService.setUser(logged.get());
             userInfoService.setLogged(true);

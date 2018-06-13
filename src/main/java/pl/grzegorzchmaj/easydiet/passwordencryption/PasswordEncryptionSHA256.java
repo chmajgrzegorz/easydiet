@@ -1,11 +1,12 @@
-package pl.grzegorzchmaj.easydiet.configuration;
+package pl.grzegorzchmaj.easydiet.passwordencryption;
 
-import java.math.BigInteger;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
 
+@Service
 public class PasswordEncryptionSHA256 implements IPasswordEncryption {
 
     @Override

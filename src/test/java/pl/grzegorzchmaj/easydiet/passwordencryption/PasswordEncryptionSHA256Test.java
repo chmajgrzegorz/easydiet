@@ -1,12 +1,8 @@
-package pl.grzegorzchmaj.easydiet.configuration;
+package pl.grzegorzchmaj.easydiet.passwordencryption;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import javax.validation.constraints.Null;
 
 public class PasswordEncryptionSHA256Test {
 

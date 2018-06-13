@@ -1,4 +1,4 @@
-package pl.grzegorzchmaj.easydiet.configuration;
+package pl.grzegorzchmaj.easydiet.passwordencryption;
 
 public interface IPasswordEncryption {
 
