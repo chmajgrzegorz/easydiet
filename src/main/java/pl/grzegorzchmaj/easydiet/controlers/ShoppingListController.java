@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.grzegorzchmaj.easydiet.models.entities.Ingredient;
@@ -33,5 +35,17 @@ public class ShoppingListController {
         }
         model.addAttribute("shoppingList", shoppingListService.createShoppingList());
         return "shoppinglist";
+    }
+
+    @GetMapping("/test")
+    public String test(){
+
+        return "about";
+    }
+
+    @PostMapping("/testpost")
+    @ResponseBody
+    public String testPost(@RequestParam("name") String name, @RequestParam("surname") String surname){
+        return "Formularz dziala pomyslnie" + name + "       " + surname ;
     }
 }
