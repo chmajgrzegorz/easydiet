@@ -45,7 +45,7 @@ public class DietMealsService {
     }
 
     public void setMealsToDiet(Diet diet){
-        User user= userInfoService.getUser();
+        User user = userInfoService.getUser();
         Long days = DAYS.between(diet.getStartDate(), diet.getEndDate())+1;
         MealInfo meal;
         for (int i = 0; i < days; i++) {
@@ -76,19 +76,24 @@ public class DietMealsService {
                         case 3:
                             return mealRepository.findRandomDinner();
                         default:
-                            return mealRepository.findRandomMeal();
+                            return mealRepository.findRandomLunch();
                     }
                 case 3:
                     switch (howManyMeals.getHowMany()) {
                         case 3:
-                            return mealRepository.findRandomMeal();
+                            return mealRepository.findRandomBreakfast();
                         default:
                             return mealRepository.findRandomDinner();
                     }
                 case 4:
-                    return mealRepository.findRandomMeal();
+                    switch (howManyMeals.getHowMany()) {
+                        case 4:
+                            return mealRepository.findRandomSupper();
+                        default:
+                            return mealRepository.findRandomTea();
+                    }
                 case 5:
-                    return mealRepository.findRandomMeal();
+                    return mealRepository.findRandomSupper();
                 default:
                     return new Meal();
             }

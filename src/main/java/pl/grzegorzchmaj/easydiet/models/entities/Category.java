@@ -18,6 +18,8 @@ public class Category {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "category", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany
+    @JoinTable(name = "meal_category", joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "meal_id"))
     private Set<Meal> meals;
 }

@@ -27,7 +27,7 @@
     </select><br/>
         Opis: <textarea th:field="*{description}"/><br/>
         Zdjęcie: <input type="text" th:field="*{imageUrl}"/><br/>
-        Kategoria: <select th:field="*{category}">
+        Kategoria: <select class="selectpicker" data-live-search="true" th:field="*{category}" multiple>
             <option th:each="cat : ${categories}"
                     th:value="${cat.id}"
                     th:text="${cat.name}"></option>

@@ -19,5 +19,5 @@ public class MealForm {
     private List<Ingredient> ingredients;
     private String description;
     private String imageUrl;
-    private Category category;
+    private Set<Category> category;
 }

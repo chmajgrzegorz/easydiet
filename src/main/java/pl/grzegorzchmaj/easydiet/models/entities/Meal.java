@@ -7,6 +7,7 @@ import pl.grzegorzchmaj.easydiet.models.forms.MealForm;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -28,9 +29,10 @@ public class Meal {
     @Column(length = 1000)
     private String description;
     private String imageUrl;
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "meal_category", joinColumns = @JoinColumn(name = "meal_id"),
+    inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> category;
     @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MealInfo> mealInfo;
     private Integer calories;

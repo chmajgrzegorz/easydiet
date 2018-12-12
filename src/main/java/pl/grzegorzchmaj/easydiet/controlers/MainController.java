@@ -26,7 +26,18 @@ public class MainController {
         this.userRepository = userRepository;
     }
 
-
+    @GetMapping("/")
+    public String index(Model model){
+        model.addAttribute("logged", userInfoService.isLogged());
+        if (!model.containsAttribute("registerForm")) {
+            model.addAttribute("registerForm", new RegisterForm());
+        }
+        model.addAttribute("sex", Sex.values());
+        model.addAttribute("physicalActivity", PhysicalActivity.values());
+        model.addAttribute("plans", Plans.values());
+        model.addAttribute("meals", HowManyMeals.values());
+        return "index";
+    }
 
     @GetMapping("/home")
     public String home(RedirectAttributes attr, Model model){
@@ -34,6 +45,7 @@ public class MainController {
             attr.addFlashAttribute("info", "Ta strona jest dostępna tylko dla zalogowanych użytkowników");
             return "redirect:/login";
         }
+
         User user = userRepository.findById(userInfoService.getUser().getId()).get();
         model.addAttribute("user", user);
         model.addAttribute("sex", Sex.values());

@@ -64,8 +64,8 @@ public class UserController {
         userRepository.save(user);
         userInfoService.setUser(user);
         userInfoService.setLogged(true);
-        redirectAttributes.addFlashAttribute("info", "Zarejestrowałeś się poprawnie");
-        return "redirect:/home";
+        //redirectAttributes.addFlashAttribute("info", "Zarejestrowałeś się poprawnie");
+        return "redirect:/";
     }
 
     @PostMapping("/update")
@@ -77,7 +77,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("registerForm", registerForm);
             return "redirect:/home";
         }
-        User user = userRepository.findByLoginAndPassword(registerForm.getLogin(),passwordEncryptionSHA256.generate(registerForm.getPassword())).get();
+        User user = userRepository.findByLoginAndPassword(registerForm.getLogin(),registerForm.getPassword()).get();
         user.update(registerForm);
         userRepository.save(user);
         userInfoService.setUser(user);
