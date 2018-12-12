@@ -29,7 +29,7 @@ public class Meal {
     @Column(length = 1000)
     private String description;
     private String imageUrl;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "meal_category", joinColumns = @JoinColumn(name = "meal_id"),
     inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> category;

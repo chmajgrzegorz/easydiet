@@ -19,4 +19,7 @@ public class UserInfoService {
     private User user;
     private boolean isLogged;
 
+
+
+
 }

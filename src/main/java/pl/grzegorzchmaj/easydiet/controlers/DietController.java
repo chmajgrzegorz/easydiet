@@ -47,48 +47,46 @@ public class DietController {
     }
 
     @GetMapping("/creatediet")
-    public String createDiet(Model model, RedirectAttributes attr){
-        if(!userInfoService.isLogged()){
+    public String createDiet(Model model, RedirectAttributes attr) {
+        if (!userInfoService.isLogged()) {
             attr.addFlashAttribute("info", "Ta strona jest dostępna tylko dla zalogowanych użytkowników");
             return "redirect:/login";
         }
         User user = userInfoService.getUser();
         DietForm dietForm = new DietForm();
         dietForm.setUser(user);
-            model.addAttribute("dietForm", dietForm);
-            return "creatediet";
+        model.addAttribute("dietForm", dietForm);
+        return "creatediet";
     }
 
     @PostMapping("/creatediet")
-    public String createDietPost(@ModelAttribute("diet") DietForm dietForm, RedirectAttributes attr){
-        if(!userInfoService.isLogged()){
+    public String createDietPost(@ModelAttribute("diet") DietForm dietForm, RedirectAttributes attr) {
+        if (!userInfoService.isLogged()) {
             attr.addFlashAttribute("info", "Ta strona jest dostępna tylko dla zalogowanych użytkowników");
             return "redirect:/login";
         }
         Diet diet = new Diet(dietForm);
-        Optional<Diet> previousDiet = dietRepository.findByUserId(userInfoService.getUser().getId());
-        if(previousDiet.isPresent()){
-            dietRepository.deleteById(previousDiet.get().getId());
-        }
+        dietMealsService.removePreviousDietIfPresent();
         dietMealsService.setMealsToDiet(diet);
         attr.addFlashAttribute("info", "Dodano pomyślnie dietę");
         return "redirect:/diet/" + diet.getStartDate();
     }
 
     @GetMapping("/diet/{date}")
-    public String diet(@PathVariable("date") String dateString, Model model, RedirectAttributes attr){
-        if(!userInfoService.isLogged()){
+    public String diet(@PathVariable("date") String dateString, Model model, RedirectAttributes attr) {
+        if (!userInfoService.isLogged()) {
             attr.addFlashAttribute("info", "Ta strona jest dostępna tylko dla zalogowanych użytkowników");
             return "redirect:/login";
         }
         Optional<Diet> diet = dietRepository.findByUser(userInfoService.getUser());
-        if(!diet.isPresent()){
+        if (!diet.isPresent()) {
             attr.addFlashAttribute("info", "Pierwsze utwórz dietę");
             return "redirect:/creatediet";
         }
+        Date startDate = Date.valueOf(diet.get().getStartDate());
+        Date endDate = Date.valueOf(diet.get().getEndDate());
         LocalDate date = LocalDate.parse(dateString);
-        List<LocalDate> dates = mealInfoRepository.findDatesBetweenStartAndEndDate(Date.valueOf(diet.get().getStartDate()),
-                Date.valueOf(diet.get().getEndDate())).get();
+        List<LocalDate> dates = mealInfoRepository.findDatesBetweenStartAndEndDate(startDate, endDate).get();
         List<MealInfo> previousMeals = diet.get().getMeals().stream().filter(s -> s.getDate().equals(date)).sorted().collect(Collectors.toList());
         List<MealInfo> meals = dietMealsService.adjustIngredients(previousMeals);
         model.addAttribute("diet", diet.get());
