@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"id","meals"})
+@EqualsAndHashCode(exclude = {"id","howManyMeals"})
 @NoArgsConstructor
 @Table(name = "ingredient_weight")
 public class IngredientWeight {

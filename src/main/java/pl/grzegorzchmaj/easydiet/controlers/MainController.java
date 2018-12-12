@@ -35,7 +35,7 @@ public class MainController {
         model.addAttribute("sex", Sex.values());
         model.addAttribute("physicalActivity", PhysicalActivity.values());
         model.addAttribute("plans", Plans.values());
-        model.addAttribute("meals", HowManyMeals.values());
+        model.addAttribute("howManyMeals", HowManyMeals.values());
         return "index";
     }
 
@@ -51,7 +51,7 @@ public class MainController {
         model.addAttribute("sex", Sex.values());
         model.addAttribute("physicalActivity", PhysicalActivity.values());
         model.addAttribute("plans", Plans.values());
-        model.addAttribute("meals", HowManyMeals.values());
+        model.addAttribute("howManyMeals", HowManyMeals.values());
         return "home";
     }
 }

@@ -32,7 +32,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Plans plans;
     @Enumerated(EnumType.STRING)
-    private HowManyMeals meals;
+    private HowManyMeals howManyMeals;
     @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Diet diet;
     private int calories;
@@ -46,7 +46,7 @@ public class User {
         this.age=registerForm.getAge();
         this.physicalActivity=registerForm.getPhysicalActivity();
         this.plans=registerForm.getPlans();
-        this.meals=registerForm.getMeals();
+        this.howManyMeals=registerForm.getHowManyMeals();
         if(registerForm.getSex().getSex()== 'K'){
             this.calories=(int)((655.1+(9.567*registerForm.getWeight())+1.85*registerForm.getHeight()
             -4.68*registerForm.getAge())*registerForm.getPhysicalActivity().getLevel()
@@ -66,7 +66,7 @@ public class User {
         this.age=registerForm.getAge();
         this.physicalActivity=registerForm.getPhysicalActivity();
         this.plans=registerForm.getPlans();
-        this.meals=registerForm.getMeals();
+        this.howManyMeals=registerForm.getHowManyMeals();
         if(registerForm.getSex().getSex()== 'K'){
             this.calories=(int)((655.1+(9.567*registerForm.getWeight())+1.85*registerForm.getHeight()
                     -4.68*registerForm.getAge())*registerForm.getPhysicalActivity().getLevel()

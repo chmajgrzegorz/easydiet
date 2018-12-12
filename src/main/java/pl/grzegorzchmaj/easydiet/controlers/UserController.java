@@ -46,7 +46,7 @@ public class UserController {
         model.addAttribute("sex", Sex.values());
         model.addAttribute("physicalActivity", PhysicalActivity.values());
         model.addAttribute("plans", Plans.values());
-        model.addAttribute("meals", HowManyMeals.values());
+        model.addAttribute("howManyMeals", HowManyMeals.values());
         return "register";
     }
 

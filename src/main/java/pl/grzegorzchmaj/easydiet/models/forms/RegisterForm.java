@@ -35,7 +35,7 @@ public class RegisterForm {
     private Integer age;
     private PhysicalActivity physicalActivity;
     private Plans plans;
-    private HowManyMeals meals;
+    private HowManyMeals howManyMeals;
 
 
 

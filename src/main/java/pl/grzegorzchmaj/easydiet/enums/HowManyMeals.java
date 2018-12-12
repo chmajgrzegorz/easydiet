@@ -9,7 +9,7 @@ public enum HowManyMeals {
     FOUR(4,0.25,0.20,0.35,0.20),
     FIVE(5,0.20,0.15,0.30,0.15,0.20);
 
-    private int howMany;
+    private int numberOfMeals;
     private double caloriesPercentage1;
     private double caloriesPercentage2;
     private double caloriesPercentage3;
@@ -17,14 +17,14 @@ public enum HowManyMeals {
     private double caloriesPercentage5;
 
     HowManyMeals(int howMany, double caloriesPercentage1, double caloriesPercentage2, double caloriesPercentage3) {
-        this.howMany = howMany;
+        this.numberOfMeals = howMany;
         this.caloriesPercentage1 = caloriesPercentage1;
         this.caloriesPercentage2 = caloriesPercentage2;
         this.caloriesPercentage3 = caloriesPercentage3;
     }
 
     HowManyMeals(int howMany, double caloriesPercentage1, double caloriesPercentage2, double caloriesPercentage3, double caloriesPercentage4) {
-        this.howMany = howMany;
+        this.numberOfMeals = howMany;
         this.caloriesPercentage1 = caloriesPercentage1;
         this.caloriesPercentage2 = caloriesPercentage2;
         this.caloriesPercentage3 = caloriesPercentage3;
@@ -32,7 +32,7 @@ public enum HowManyMeals {
     }
 
     HowManyMeals(int howMany, double caloriesPercentage1, double caloriesPercentage2, double caloriesPercentage3, double caloriesPercentage4, double caloriesPercentage5) {
-        this.howMany = howMany;
+        this.numberOfMeals = howMany;
         this.caloriesPercentage1 = caloriesPercentage1;
         this.caloriesPercentage2 = caloriesPercentage2;
         this.caloriesPercentage3 = caloriesPercentage3;

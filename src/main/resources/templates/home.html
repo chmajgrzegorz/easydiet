@@ -33,10 +33,10 @@
                 th:value="${plan}"
                 th:text="${plan.description}"></option>
     </select><br/>
-        Ilość posiłków w ciągu dnia: <select th:field="*{meals}">
-        <option th:each="meal : ${meals}"
+        Ilość posiłków w ciągu dnia: <select th:field="*{howManyMeals}">
+        <option th:each="meal : ${howManyMeals}"
                 th:value="${meal}"
-                th:text="${meal.howMany}"></option>
+                th:text="${meal.numberOfMeals}"></option>
     </select><br/>
         <input type="submit" value="Zmień dane!"/>
     </form>
