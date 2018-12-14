@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.grzegorzchmaj.easydiet.exceptions.ShoppingServiceException;
 import pl.grzegorzchmaj.easydiet.models.services.ShoppingListService;
 import pl.grzegorzchmaj.easydiet.models.services.UserInfoService;
 
@@ -21,7 +22,7 @@ public class ShoppingListController {
     }
 
     @GetMapping("/createshoppinglist")
-    public String createShoppingListGet(Model model, RedirectAttributes attr){
+    public String createShoppingListGet(Model model, RedirectAttributes attr) throws ShoppingServiceException {
         if(!userInfoService.isLogged()){
             attr.addFlashAttribute("info", "Ta strona jest dostępna tylko dla zalogowanych użytkowników");
             return "redirect:/login";

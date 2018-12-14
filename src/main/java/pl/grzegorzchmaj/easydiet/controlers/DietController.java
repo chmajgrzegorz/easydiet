@@ -87,8 +87,8 @@ public class DietController {
         Date endDate = Date.valueOf(diet.get().getEndDate());
         LocalDate date = LocalDate.parse(dateString);
         List<LocalDate> dates = mealInfoRepository.findDatesBetweenStartAndEndDate(startDate, endDate).get();
-        List<MealInfo> previousMeals = diet.get().getMeals().stream().filter(s -> s.getDate().equals(date)).sorted().collect(Collectors.toList());
-        List<MealInfo> meals = dietMealsService.adjustIngredients(previousMeals);
+        List<MealInfo> meals = diet.get().getMeals().stream().filter(s -> s.getDate().equals(date)).sorted().collect(Collectors.toList());
+        dietMealsService.adjustIngredients(meals);
         model.addAttribute("diet", diet.get());
         model.addAttribute("mealsInfo", meals);
         model.addAttribute("dates", dates);

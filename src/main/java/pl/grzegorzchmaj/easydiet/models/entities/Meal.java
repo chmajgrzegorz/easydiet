@@ -25,7 +25,7 @@ public class Meal {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "meal_ingredient", joinColumns = @JoinColumn(name = "meal_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-    private List<IngredientWeight> ingredients;
+    private List<IngredientWeight> ingredientWeights;
     @Column(length = 1000)
     private String description;
     private String imageUrl;

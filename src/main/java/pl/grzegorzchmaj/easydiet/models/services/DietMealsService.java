@@ -107,34 +107,33 @@ public class DietMealsService {
         }
     }
 
-    public List<MealInfo> adjustIngredients(List<MealInfo> meals) {
+    public void adjustIngredients(List<MealInfo> meals) {
         User user = userInfoService.getUser();
         for (MealInfo meal : meals) {
             switch (meal.getName()) {
                 case "Posiłek 1":
-                    meal.getMeal().getIngredients().forEach(ingredient -> ingredient.setWeight((long) (user.getHowManyMeals().getCaloriesPercentage1() * user.getCalories() / meal.getMeal().getCalories() * ingredient.getWeight())));
+                    meal.getMeal().getIngredientWeights().forEach(ingredient -> ingredient.setWeight((long) (user.getHowManyMeals().getCaloriesPercentage1() * user.getCalories() / meal.getMeal().getCalories() * ingredient.getWeight())));
                     meal.getMeal().setCalories((int)(meal.getMeal().getCalories() * user.getHowManyMeals().getCaloriesPercentage1() * user.getCalories() / meal.getMeal().getCalories()));
                     break;
                 case "Posiłek 2":
-                    meal.getMeal().getIngredients().forEach(s -> s.setWeight((long) (user.getHowManyMeals().getCaloriesPercentage2() * user.getCalories() / meal.getMeal().getCalories() * s.getWeight())));
+                    meal.getMeal().getIngredientWeights().forEach(s -> s.setWeight((long) (user.getHowManyMeals().getCaloriesPercentage2() * user.getCalories() / meal.getMeal().getCalories() * s.getWeight())));
                     meal.getMeal().setCalories((int) (meal.getMeal().getCalories() * user.getHowManyMeals().getCaloriesPercentage2() * user.getCalories() / meal.getMeal().getCalories()));
                     break;
                 case "Posiłek 3":
-                    meal.getMeal().getIngredients().forEach(s -> s.setWeight((long) (user.getHowManyMeals().getCaloriesPercentage3() * user.getCalories() / meal.getMeal().getCalories() * s.getWeight())));
+                    meal.getMeal().getIngredientWeights().forEach(s -> s.setWeight((long) (user.getHowManyMeals().getCaloriesPercentage3() * user.getCalories() / meal.getMeal().getCalories() * s.getWeight())));
                     meal.getMeal().setCalories((int) (meal.getMeal().getCalories() * user.getHowManyMeals().getCaloriesPercentage3() * user.getCalories() / meal.getMeal().getCalories()));
                     break;
                 case "Posiłek 4":
-                    meal.getMeal().getIngredients().forEach(s -> s.setWeight((long) (user.getHowManyMeals().getCaloriesPercentage4() * user.getCalories() / meal.getMeal().getCalories() * s.getWeight())));
+                    meal.getMeal().getIngredientWeights().forEach(s -> s.setWeight((long) (user.getHowManyMeals().getCaloriesPercentage4() * user.getCalories() / meal.getMeal().getCalories() * s.getWeight())));
                     meal.getMeal().setCalories((int) (meal.getMeal().getCalories() * user.getHowManyMeals().getCaloriesPercentage4() * user.getCalories() / meal.getMeal().getCalories()));
                     break;
                 case "Posiłek 5":
-                    meal.getMeal().getIngredients().forEach(s -> s.setWeight((long) (user.getHowManyMeals().getCaloriesPercentage5() * user.getCalories() / meal.getMeal().getCalories() * s.getWeight())));
+                    meal.getMeal().getIngredientWeights().forEach(s -> s.setWeight((long) (user.getHowManyMeals().getCaloriesPercentage5() * user.getCalories() / meal.getMeal().getCalories() * s.getWeight())));
                     meal.getMeal().setCalories((int) (meal.getMeal().getCalories() * user.getHowManyMeals().getCaloriesPercentage5() * user.getCalories() / meal.getMeal().getCalories()));
                     break;
                 default:
             }
         }
-        return meals;
     }
 
     public void removePreviousDietIfPresent(){

@@ -81,7 +81,7 @@ public class MealController {
         mealIngredientsService.addIngredientWeight(ingredientWeight);
         if(mealIngredientsService.ingredientsIsNull()){
             Meal meal = new Meal(mealIngredientsService.getMealForm());
-            meal.setIngredients(mealIngredientsService.getSetIngredients());
+            meal.setIngredientWeights(mealIngredientsService.getSetIngredients());
             meal.setCalories(mealIngredientsService.setMealCalories());
             mealRepository.save(meal);
             mealIngredientsService.clear();
