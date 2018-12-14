@@ -18,7 +18,6 @@ import pl.grzegorzchmaj.easydiet.repositories.UserRepository;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -88,7 +87,7 @@ public class DietController {
         LocalDate date = LocalDate.parse(dateString);
         List<LocalDate> dates = mealInfoRepository.findDatesBetweenStartAndEndDate(startDate, endDate).get();
         List<MealInfo> meals = diet.get().getMeals().stream().filter(s -> s.getDate().equals(date)).sorted().collect(Collectors.toList());
-        dietMealsService.adjustIngredients(meals);
+        dietMealsService.adjustMealsIngredients(meals);
         model.addAttribute("diet", diet.get());
         model.addAttribute("mealsInfo", meals);
         model.addAttribute("dates", dates);

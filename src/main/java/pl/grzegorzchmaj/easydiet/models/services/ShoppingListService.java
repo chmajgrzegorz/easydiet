@@ -38,12 +38,11 @@ public class ShoppingListService {
     public Map<Ingredient,Long> createShoppingList() throws ShoppingServiceException {
         User user = findUser(userInfoService.getUser()).orElseThrow(() -> new ShoppingServiceException("User not found"));
         List<MealInfo> meals = user.getDiet().getMeals();
-        dietMealsService.adjustIngredients(meals);
+        dietMealsService.adjustMealsIngredients(meals);
         Map<Ingredient, Long> shoppingList = new HashMap<>();
         processMeals(meals, shoppingList);
         return shoppingList;
     }
-
 
     private Optional<User> findUser(User user) {
         if (user != null) {

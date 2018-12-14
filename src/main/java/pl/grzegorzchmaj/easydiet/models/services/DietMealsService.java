@@ -7,14 +7,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
-import pl.grzegorzchmaj.easydiet.enums.HowManyMeals;
 import pl.grzegorzchmaj.easydiet.models.entities.*;
 import pl.grzegorzchmaj.easydiet.repositories.DietRepository;
 import pl.grzegorzchmaj.easydiet.repositories.MealInfoRepository;
 import pl.grzegorzchmaj.easydiet.repositories.MealRepository;
 import pl.grzegorzchmaj.easydiet.repositories.UserRepository;
 
-import java.time.LocalDate;
 import java.util.*;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -25,7 +23,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class DietMealsService {
 
-    private List<MealInfo> meals = new ArrayList<>();
+    //private List<MealInfo> meals = new ArrayList<>();
 
     MealRepository mealRepository;
     DietRepository dietRepository;
@@ -44,22 +42,25 @@ public class DietMealsService {
     }
 
     public void setMealsToDiet(Diet diet) {
-
+        List<MealInfo> meals = new ArrayList<>();
         Long daysOfDiet = DAYS.between(diet.getStartDate(), diet.getEndDate()) + 1;
-        for (int dayOfDiet = 0; dayOfDiet < daysOfDiet; dayOfDiet++) {
-            addMealInfoToDiet(diet, dayOfDiet);
-        }
+        addMealInfosToDiet(diet, meals, daysOfDiet);
         diet.setMeals(meals);
         dietRepository.save(diet);
         saveDietToUser(diet);
-        meals.clear();
     }
 
-    public void addMealInfoToDiet(Diet diet, int dayOfDiet) {
+    private void addMealInfosToDiet(Diet diet, List<MealInfo> meals, Long daysOfDiet) {
+        for (int dayOfDiet = 0; dayOfDiet < daysOfDiet; dayOfDiet++) {
+            addMealInfoToDiet(diet, dayOfDiet, meals);
+        }
+    }
+
+    private void addMealInfoToDiet(Diet diet, int dayOfDiet, List<MealInfo> meals) {
         int numberOfMealsInDay = userInfoService.getUser().getHowManyMeals().getNumberOfMeals();
         for (int mealNumber = 1; mealNumber <= numberOfMealsInDay ; mealNumber++) {
-            MealInfo meal = new MealInfo(diet.getStartDate().plusDays(dayOfDiet), "Posiłek " + mealNumber, adjustMeal(numberOfMealsInDay, mealNumber));
-            if (isMealEqualToMealInfo(meal)) {
+            MealInfo meal = new MealInfo(diet.getStartDate().plusDays(dayOfDiet), "Posiłek " + mealNumber, findMeal(numberOfMealsInDay, mealNumber));
+            if (isMealEqualToMealInfo(meal,meals)) {
                 mealNumber--;
             } else {
                 meals.add(meal);
@@ -68,14 +69,14 @@ public class DietMealsService {
         }
     }
 
-    public boolean isMealEqualToMealInfo(MealInfo meal) {
+    private boolean isMealEqualToMealInfo(MealInfo meal, List<MealInfo> meals) {
 
         return meals.stream()
                 .anyMatch(mealInfo -> mealInfo.getMeal().getId() == meal.getMeal().getId());
     }
 
 
-    public Meal adjustMeal(int numberOfMealsInDay, int mealNumber) {
+    private Meal findMeal(int numberOfMealsInDay, int mealNumber) {
         switch (mealNumber) {
             case 1:
                 return mealRepository.findRandomBreakfast();
@@ -107,34 +108,35 @@ public class DietMealsService {
         }
     }
 
-    public void adjustIngredients(List<MealInfo> meals) {
+    public void adjustMealsIngredients(List<MealInfo> meals) {
         User user = userInfoService.getUser();
         for (MealInfo meal : meals) {
             switch (meal.getName()) {
                 case "Posiłek 1":
-                    meal.getMeal().getIngredientWeights().forEach(ingredient -> ingredient.setWeight((long) (user.getHowManyMeals().getCaloriesPercentage1() * user.getCalories() / meal.getMeal().getCalories() * ingredient.getWeight())));
-                    meal.getMeal().setCalories((int)(meal.getMeal().getCalories() * user.getHowManyMeals().getCaloriesPercentage1() * user.getCalories() / meal.getMeal().getCalories()));
+                    adjustIngredientsCalories(user, meal, user.getHowManyMeals().getCaloriesPercentage1());
                     break;
                 case "Posiłek 2":
-                    meal.getMeal().getIngredientWeights().forEach(s -> s.setWeight((long) (user.getHowManyMeals().getCaloriesPercentage2() * user.getCalories() / meal.getMeal().getCalories() * s.getWeight())));
-                    meal.getMeal().setCalories((int) (meal.getMeal().getCalories() * user.getHowManyMeals().getCaloriesPercentage2() * user.getCalories() / meal.getMeal().getCalories()));
+                    adjustIngredientsCalories(user, meal, user.getHowManyMeals().getCaloriesPercentage2());
                     break;
                 case "Posiłek 3":
-                    meal.getMeal().getIngredientWeights().forEach(s -> s.setWeight((long) (user.getHowManyMeals().getCaloriesPercentage3() * user.getCalories() / meal.getMeal().getCalories() * s.getWeight())));
-                    meal.getMeal().setCalories((int) (meal.getMeal().getCalories() * user.getHowManyMeals().getCaloriesPercentage3() * user.getCalories() / meal.getMeal().getCalories()));
+                    adjustIngredientsCalories(user, meal, user.getHowManyMeals().getCaloriesPercentage3());
                     break;
                 case "Posiłek 4":
-                    meal.getMeal().getIngredientWeights().forEach(s -> s.setWeight((long) (user.getHowManyMeals().getCaloriesPercentage4() * user.getCalories() / meal.getMeal().getCalories() * s.getWeight())));
-                    meal.getMeal().setCalories((int) (meal.getMeal().getCalories() * user.getHowManyMeals().getCaloriesPercentage4() * user.getCalories() / meal.getMeal().getCalories()));
+                    adjustIngredientsCalories(user, meal, user.getHowManyMeals().getCaloriesPercentage4());
                     break;
                 case "Posiłek 5":
-                    meal.getMeal().getIngredientWeights().forEach(s -> s.setWeight((long) (user.getHowManyMeals().getCaloriesPercentage5() * user.getCalories() / meal.getMeal().getCalories() * s.getWeight())));
-                    meal.getMeal().setCalories((int) (meal.getMeal().getCalories() * user.getHowManyMeals().getCaloriesPercentage5() * user.getCalories() / meal.getMeal().getCalories()));
+                    adjustIngredientsCalories(user, meal, user.getHowManyMeals().getCaloriesPercentage5());
                     break;
                 default:
             }
         }
     }
+
+    private void adjustIngredientsCalories(User user, MealInfo meal, double caloriesPercentage) {
+        meal.getMeal().getIngredientWeights().forEach(ingredient -> ingredient.setWeight((long) (caloriesPercentage * user.getCalories() / meal.getMeal().getCalories() * ingredient.getWeight())));
+        meal.getMeal().setCalories((int) (meal.getMeal().getCalories() * caloriesPercentage * user.getCalories() / meal.getMeal().getCalories()));
+    }
+
 
     public void removePreviousDietIfPresent(){
         Optional<Diet> previousDiet = dietRepository.findByUserId(userInfoService.getUser().getId());
