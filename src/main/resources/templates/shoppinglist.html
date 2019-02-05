@@ -11,7 +11,7 @@
             <th>Składnik:</th>
             <th>Waga:</th>
         </tr>
-        <tr th:each="instance : ${shoppingList}">
+        <tr th:each="instance : ${ingredientWeights}">
             <td th:text="${instance.key.name}"></td>
             <td th:text="${instance.value} + 'g' "></td>
         </tr>

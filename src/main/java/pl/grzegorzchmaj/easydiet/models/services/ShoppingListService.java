@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 import pl.grzegorzchmaj.easydiet.exceptions.ShoppingServiceException;
+import pl.grzegorzchmaj.easydiet.models.ShoppingList;
 import pl.grzegorzchmaj.easydiet.models.entities.*;
 import pl.grzegorzchmaj.easydiet.repositories.UserRepository;
 
@@ -20,62 +21,41 @@ import java.util.*;
 
 public class ShoppingListService {
 
-    UserInfoService userInfoService;
     DietMealsService dietMealsService;
-    UserRepository userRepository;
 
     @Autowired
-    public ShoppingListService(UserInfoService userInfoService, DietMealsService dietMealsService,UserRepository userRepository) {
-        this.userInfoService = userInfoService;
+    public ShoppingListService(DietMealsService dietMealsService) {
         this.dietMealsService = dietMealsService;
-        this.userRepository = userRepository;
     }
 
 
-    public Map<Ingredient,Long> createShoppingList() throws ShoppingServiceException {
-        User user = findUser(userInfoService.getUser()).orElseThrow(() -> new ShoppingServiceException("User not found"));
-        List<MealInfo> meals = checkDiet(user).getMeals();
+    public ShoppingList createShoppingList(User user) throws ShoppingServiceException {
+        List<MealInfo> meals = getMeals(user);
         dietMealsService.adjustMealsIngredients(meals);
-        Map<Ingredient, Long> shoppingList = new HashMap<>();
-        processMeals(meals, shoppingList);
-        return shoppingList;
+        return createShoppingList(meals);
     }
 
-    private Optional<User> findUser(User user) {
-        if (user != null) {
-            return userRepository.findByLoginAndPassword(user.getLogin(), user.getPassword());
-        }
-        else {
-            return Optional.empty();
-        }
-    }
-
-    private Diet checkDiet(User user){
-        try{
-            user.getDiet().getMeals();
-        } catch(NullPointerException e){
+    private List<MealInfo> getMeals(User user){
+        Diet diet = user.getDiet();
+        if (diet == null || diet.getMeals() == null || diet.getMeals().isEmpty()) {
             throw new ShoppingServiceException("User doesn't have diet");
         }
-        return user.getDiet();
+        return diet.getMeals();
     }
 
-    private void processMeals(List<MealInfo> meals, Map<Ingredient, Long> shoppingList) {
+
+    private ShoppingList createShoppingList(List<MealInfo> meals){
+        ShoppingList shoppingList = new ShoppingList();
         for (MealInfo mealInfo : meals) {
             processIngredientWeights(mealInfo.getMeal().getIngredientWeights(), shoppingList);
         }
+        System.out.println(shoppingList.getIngredientWeights().size());
+        return shoppingList;
     }
 
-    private void processIngredientWeights(List<IngredientWeight> ingredientWeights, Map<Ingredient, Long> shoppingList) {
+    private void processIngredientWeights(List<IngredientWeight> ingredientWeights, ShoppingList shoppingList) {
         for (IngredientWeight ingredientWeight: ingredientWeights) {
-            processIngredientWeight(ingredientWeight, shoppingList);
+            shoppingList.addWeight(ingredientWeight);
         }
     }
-
-    private void processIngredientWeight(IngredientWeight ingredientWeight, Map<Ingredient, Long> shoppingList) {
-        Ingredient ingredient = ingredientWeight.getIngredient();
-        Long weight = shoppingList.getOrDefault(ingredient, 0L);
-        weight += ingredientWeight.getWeight();
-        shoppingList.put(ingredient, weight);
-    }
-
 }

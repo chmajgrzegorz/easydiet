@@ -6,8 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.grzegorzchmaj.easydiet.exceptions.ShoppingServiceException;
+import pl.grzegorzchmaj.easydiet.models.ShoppingList;
+import pl.grzegorzchmaj.easydiet.models.entities.User;
 import pl.grzegorzchmaj.easydiet.models.services.ShoppingListService;
 import pl.grzegorzchmaj.easydiet.models.services.UserInfoService;
+import pl.grzegorzchmaj.easydiet.repositories.UserRepository;
 
 @Controller
 public class ShoppingListController {
@@ -27,7 +30,8 @@ public class ShoppingListController {
             attr.addFlashAttribute("info", "Ta strona jest dostępna tylko dla zalogowanych użytkowników");
             return "redirect:/login";
         }
-        model.addAttribute("shoppingList", shoppingListService.createShoppingList());
+        ShoppingList shoppingList = shoppingListService.createShoppingList(userInfoService.getUser());
+        model.addAttribute("ingredientWeights", shoppingList.getIngredientWeights());
         return "shoppinglist";
     }
 
