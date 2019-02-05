@@ -31,7 +31,7 @@ public class ShoppingListService {
 
     public ShoppingList createShoppingList(User user) throws ShoppingServiceException {
         List<MealInfo> meals = getMeals(user);
-        dietMealsService.adjustMealsIngredients(meals);
+        dietMealsService.adjustMealsIngredients(meals,user);
         return createShoppingList(meals);
     }
 

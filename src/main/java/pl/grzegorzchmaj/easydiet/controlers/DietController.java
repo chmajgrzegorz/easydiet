@@ -60,8 +60,8 @@ public class DietController {
             return "redirect:/login";
         }
         Diet diet = new Diet(dietForm);
-        dietMealsService.removePreviousDietIfPresent();
-        dietMealsService.setMealsToDiet(diet);
+        dietMealsService.removePreviousDietIfPresent(userInfoService.getUser());
+        dietMealsService.setMealsToDiet(diet,userInfoService.getUser());
         attr.addFlashAttribute("info", "Dodano pomyślnie dietę");
         return "redirect:/diet/" + diet.getStartDate();
     }
@@ -82,7 +82,7 @@ public class DietController {
         LocalDate date = LocalDate.parse(dateString);
         List<LocalDate> dates = mealInfoRepository.findDatesBetweenStartAndEndDate(startDate, endDate).get();
         List<MealInfo> meals = diet.get().getMeals().stream().filter(s -> s.getDate().equals(date)).sorted().collect(Collectors.toList());
-        dietMealsService.adjustMealsIngredients(meals);
+        dietMealsService.adjustMealsIngredients(meals,userInfoService.getUser());
         model.addAttribute("diet", diet.get());
         model.addAttribute("mealsInfo", meals);
         model.addAttribute("dates", dates);
