@@ -24,7 +24,7 @@ public class Diet {
     @Id
     @GeneratedValue
     private Long id;
-    @OneToOne(cascade = {CascadeType.DETACH}, orphanRemoval = false)
+    @OneToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)

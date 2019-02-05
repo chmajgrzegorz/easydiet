@@ -26,22 +26,17 @@ import java.util.stream.Collectors;
 @Controller
 public class DietController {
 
-    UserInfoService userInfoService;
-    DietRepository dietRepository;
-    UserRepository userRepository;
-    DietMealsService dietMealsService;
-    IngredientRepository ingredientRepository;
-    MealInfoRepository mealInfoRepository;
+    private UserInfoService userInfoService;
+    private DietRepository dietRepository;
+    private DietMealsService dietMealsService;
+    private MealInfoRepository mealInfoRepository;
 
     @Autowired
     public DietController(UserInfoService userInfoService, DietRepository dietRepository,
-                          UserRepository userRepository, IngredientRepository ingredientRepository,
                           DietMealsService dietMealsService, MealInfoRepository mealInfoRepository) {
         this.userInfoService = userInfoService;
         this.dietRepository = dietRepository;
-        this.userRepository = userRepository;
         this.dietMealsService = dietMealsService;
-        this.ingredientRepository = ingredientRepository;
         this.mealInfoRepository = mealInfoRepository;
     }
 

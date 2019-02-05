@@ -41,7 +41,7 @@ public class MealIngredientsService {
     }
 
     public Integer setMealCalories(){
-        Integer calories = 0;
+        int calories = 0;
         for (IngredientWeight ingredient : setIngredients) {
             calories += (int)(ingredient.getIngredient().getCaloriesPer100g()*ingredient.getWeight()/100);
         }
@@ -53,9 +53,6 @@ public class MealIngredientsService {
     }
 
     public boolean ingredientsIsNull(){
-        if(ingredients.size()==0){
-            return true;
-        }
-        return false;
+        return ingredients.size() == 0;
     }
 }

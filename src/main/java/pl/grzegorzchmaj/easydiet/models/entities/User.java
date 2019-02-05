@@ -33,7 +33,7 @@ public class User {
     private Plans plans;
     @Enumerated(EnumType.STRING)
     private HowManyMeals howManyMeals;
-    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToOne(cascade = {CascadeType.REMOVE}, orphanRemoval = true)
     private Diet diet;
     private int calories;
 

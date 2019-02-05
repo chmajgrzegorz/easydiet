@@ -13,11 +13,14 @@ import pl.grzegorzchmaj.easydiet.enums.HowManyMeals;
 import pl.grzegorzchmaj.easydiet.enums.PhysicalActivity;
 import pl.grzegorzchmaj.easydiet.enums.Plans;
 import pl.grzegorzchmaj.easydiet.enums.Sex;
+import pl.grzegorzchmaj.easydiet.models.entities.Diet;
 import pl.grzegorzchmaj.easydiet.models.entities.User;
 import pl.grzegorzchmaj.easydiet.models.forms.LoginForm;
 import pl.grzegorzchmaj.easydiet.models.forms.RegisterForm;
+import pl.grzegorzchmaj.easydiet.models.services.DietMealsService;
 import pl.grzegorzchmaj.easydiet.models.services.UserInfoService;
 import pl.grzegorzchmaj.easydiet.passwordencryption.PasswordEncryptionSHA256;
+import pl.grzegorzchmaj.easydiet.repositories.DietRepository;
 import pl.grzegorzchmaj.easydiet.repositories.UserRepository;
 
 import javax.validation.Valid;
@@ -64,13 +67,12 @@ public class UserController {
         userRepository.save(user);
         userInfoService.setUser(user);
         userInfoService.setLogged(true);
-        //redirectAttributes.addFlashAttribute("info", "Zarejestrowałeś się poprawnie");
         return "redirect:/";
     }
 
     @PostMapping("/update")
     public String afterUpdate(@ModelAttribute("registerForm") @Valid RegisterForm registerForm, BindingResult bindingResult,
-                                RedirectAttributes redirectAttributes, Model model){
+                                RedirectAttributes redirectAttributes){
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("info", "Wypełnij poprawnie formularz");
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerForm", bindingResult);

@@ -8,10 +8,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 import pl.grzegorzchmaj.easydiet.exceptions.ShoppingServiceException;
-import pl.grzegorzchmaj.easydiet.models.entities.Ingredient;
-import pl.grzegorzchmaj.easydiet.models.entities.IngredientWeight;
-import pl.grzegorzchmaj.easydiet.models.entities.MealInfo;
-import pl.grzegorzchmaj.easydiet.models.entities.User;
+import pl.grzegorzchmaj.easydiet.models.entities.*;
 import pl.grzegorzchmaj.easydiet.repositories.UserRepository;
 
 import java.util.*;
@@ -37,7 +34,7 @@ public class ShoppingListService {
 
     public Map<Ingredient,Long> createShoppingList() throws ShoppingServiceException {
         User user = findUser(userInfoService.getUser()).orElseThrow(() -> new ShoppingServiceException("User not found"));
-        List<MealInfo> meals = user.getDiet().getMeals();
+        List<MealInfo> meals = checkDiet(user).getMeals();
         dietMealsService.adjustMealsIngredients(meals);
         Map<Ingredient, Long> shoppingList = new HashMap<>();
         processMeals(meals, shoppingList);
@@ -51,6 +48,15 @@ public class ShoppingListService {
         else {
             return Optional.empty();
         }
+    }
+
+    private Diet checkDiet(User user){
+        try{
+            user.getDiet().getMeals();
+        } catch(NullPointerException e){
+            throw new ShoppingServiceException("User doesn't have diet");
+        }
+        return user.getDiet();
     }
 
     private void processMeals(List<MealInfo> meals, Map<Ingredient, Long> shoppingList) {

@@ -23,8 +23,6 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class DietMealsService {
 
-    //private List<MealInfo> meals = new ArrayList<>();
-
     MealRepository mealRepository;
     DietRepository dietRepository;
     UserRepository userRepository;
@@ -72,7 +70,7 @@ public class DietMealsService {
     private boolean isMealEqualToMealInfo(MealInfo meal, List<MealInfo> meals) {
 
         return meals.stream()
-                .anyMatch(mealInfo -> mealInfo.getMeal().getId() == meal.getMeal().getId());
+                .anyMatch(mealInfo -> mealInfo.getMeal().getId().equals(meal.getMeal().getId()));
     }
 
 
@@ -90,7 +88,7 @@ public class DietMealsService {
             case 3:
                 switch (numberOfMealsInDay) {
                     case 3:
-                        return mealRepository.findRandomBreakfast();
+                        return mealRepository.findRandomSupper();
                     default:
                         return mealRepository.findRandomDinner();
                 }
@@ -140,12 +138,10 @@ public class DietMealsService {
 
     public void removePreviousDietIfPresent(){
         Optional<Diet> previousDiet = dietRepository.findByUserId(userInfoService.getUser().getId());
-        if(previousDiet.isPresent()){
-            dietRepository.deleteById(previousDiet.get().getId());
-        }
+        previousDiet.ifPresent(diet -> dietRepository.deleteById(diet.getId()));
     }
 
-    public void saveDietToUser(Diet diet) {
+    private void saveDietToUser(Diet diet) {
         User user = userRepository.findByLoginAndPassword(userInfoService.getUser().getLogin(), userInfoService.getUser().getPassword()).get();
         user.setDiet(diet);
         userRepository.save(user);

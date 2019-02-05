@@ -25,13 +25,13 @@ import java.util.stream.Collectors;
 @Controller
 public class MealController {
 
-    UserInfoService userInfoService;
-    MealRepository mealRepository;
-    IngredientRepository ingredientRepository;
-    CategoryRepository categoryRepository;
-    IngredientWeightRepository ingredientWeightRepository;
-    MealIngredientsService mealIngredientsService;
-    TextToHtml textToHtml;
+    private UserInfoService userInfoService;
+    private MealRepository mealRepository;
+    private IngredientRepository ingredientRepository;
+    private CategoryRepository categoryRepository;
+    private IngredientWeightRepository ingredientWeightRepository;
+    private MealIngredientsService mealIngredientsService;
+    private TextToHtml textToHtml;
 
     @Autowired
     public MealController(UserInfoService userInfoService,MealRepository mealRepository,
@@ -101,6 +101,18 @@ public class MealController {
         model.addAttribute("ingredients", ingredientRepository.findAll());
         model.addAttribute("categories", categoryRepository.findAll());
         return "meal";
+    }
+
+    @ResponseBody
+    @GetMapping("/removemeal/{mealId}")
+    public String removeMeal(@PathVariable Long mealId, RedirectAttributes attr){
+        if(!userInfoService.isLogged()){
+            attr.addFlashAttribute("info", "Ta strona jest dostępna tylko dla zalogowanych użytkowników");
+            return "redirect:/login";
+        }
+
+        mealRepository.deleteById(mealId);
+        return "Usunieto danie";
     }
 
     @PostMapping("/addmeal")
