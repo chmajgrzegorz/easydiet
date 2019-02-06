@@ -19,7 +19,7 @@ public class Category {
     private String name;
 
     @ManyToMany
-    @JoinTable(name = "meal_category", joinColumns = @JoinColumn(name = "category_id"),
+    @JoinTable(name = "meal_ category", joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "meal_id"))
     private Set<Meal> meals;
 }

@@ -49,7 +49,6 @@ public class ShoppingListService {
         for (MealInfo mealInfo : meals) {
             processIngredientWeights(mealInfo.getMeal().getIngredientWeights(), shoppingList);
         }
-        System.out.println(shoppingList.getIngredientWeights().size());
         return shoppingList;
     }
 
