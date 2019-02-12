@@ -1,24 +1,25 @@
-package pl.grzegorzchmaj.easydiet.models.entities;
+package pl.grzegorzchmaj.easydiet.entities;
 
 import lombok.*;
 import pl.grzegorzchmaj.easydiet.enums.HowManyMeals;
 import pl.grzegorzchmaj.easydiet.enums.PhysicalActivity;
 import pl.grzegorzchmaj.easydiet.enums.Plans;
 import pl.grzegorzchmaj.easydiet.enums.Sex;
-import pl.grzegorzchmaj.easydiet.models.forms.RegisterForm;
+import pl.grzegorzchmaj.easydiet.forms.RegisterForm;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @Table(name = "user")
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"id"})
+@EqualsAndHashCode(exclude = {"id", "roles"})
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String login;
     private String password;
@@ -36,6 +37,9 @@ public class User {
     @OneToOne(cascade = {CascadeType.REMOVE}, orphanRemoval = true)
     private Diet diet;
     private int calories;
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     public User(RegisterForm registerForm){
         this.login=registerForm.getLogin();

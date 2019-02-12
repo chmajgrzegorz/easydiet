@@ -1,18 +1,16 @@
-package pl.grzegorzchmaj.easydiet.models.services;
+package pl.grzegorzchmaj.easydiet.services;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class TextToHtmlTest {
 
-    TextToHtml textToHtml;
+    private TextToHtml textToHtml;
 
     @Before
     public void setUp(){
-        textToHtml = new TextToHtml();
+        textToHtml = new TextToHtmlImpl();
     }
 
     @Test

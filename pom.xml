@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>easydiet</name>
-    <description></description>
+    <description>Diet application</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -88,6 +88,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
     </dependencies>
 

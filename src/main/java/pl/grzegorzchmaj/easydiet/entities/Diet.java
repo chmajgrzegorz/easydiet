@@ -1,16 +1,12 @@
-package pl.grzegorzchmaj.easydiet.models.entities;
+package pl.grzegorzchmaj.easydiet.entities;
 
 import lombok.*;
-import pl.grzegorzchmaj.easydiet.models.forms.DietForm;
+import pl.grzegorzchmaj.easydiet.forms.DietForm;
 
 import javax.persistence.*;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import static java.time.temporal.ChronoUnit.DAYS;
 
 @Entity
 @Getter
@@ -22,7 +18,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class Diet {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "user_id")

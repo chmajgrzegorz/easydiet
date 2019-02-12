@@ -1,4 +1,4 @@
-package pl.grzegorzchmaj.easydiet.models.entities;
+package pl.grzegorzchmaj.easydiet.entities;
 
 import lombok.*;
 
@@ -14,7 +14,7 @@ import java.util.Set;
 public class Category {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 

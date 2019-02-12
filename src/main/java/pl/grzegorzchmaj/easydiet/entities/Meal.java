@@ -1,12 +1,11 @@
-package pl.grzegorzchmaj.easydiet.models.entities;
+package pl.grzegorzchmaj.easydiet.entities;
 
 
 import lombok.*;
-import pl.grzegorzchmaj.easydiet.models.forms.MealForm;
+import pl.grzegorzchmaj.easydiet.forms.MealForm;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -19,7 +18,7 @@ import java.util.Set;
 public class Meal {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @ManyToMany(fetch = FetchType.EAGER)

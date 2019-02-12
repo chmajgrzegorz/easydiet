@@ -1,8 +1,8 @@
 package pl.grzegorzchmaj.easydiet.models;
 
 import lombok.Data;
-import pl.grzegorzchmaj.easydiet.models.entities.Ingredient;
-import pl.grzegorzchmaj.easydiet.models.entities.IngredientWeight;
+import pl.grzegorzchmaj.easydiet.entities.Ingredient;
+import pl.grzegorzchmaj.easydiet.entities.IngredientWeight;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +17,6 @@ public class ShoppingList {
         Long weight = ingredientWeights.getOrDefault(ingredient, 0L);
         weight += ingredientWeight.getWeight();
         ingredientWeights.put(ingredient, weight);
-        System.out.println(ingredient + "   " + weight);
     }
 
 }

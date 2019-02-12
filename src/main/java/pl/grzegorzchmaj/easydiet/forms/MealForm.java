@@ -1,10 +1,9 @@
-package pl.grzegorzchmaj.easydiet.models.forms;
+package pl.grzegorzchmaj.easydiet.forms;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.grzegorzchmaj.easydiet.models.entities.Category;
-import pl.grzegorzchmaj.easydiet.models.entities.Ingredient;
-import pl.grzegorzchmaj.easydiet.models.entities.IngredientWeight;
+import pl.grzegorzchmaj.easydiet.entities.Category;
+import pl.grzegorzchmaj.easydiet.entities.Ingredient;
 
 
 import java.util.List;

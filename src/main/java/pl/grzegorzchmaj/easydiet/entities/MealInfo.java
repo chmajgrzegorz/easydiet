@@ -1,9 +1,8 @@
-package pl.grzegorzchmaj.easydiet.models.entities;
+package pl.grzegorzchmaj.easydiet.entities;
 
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,7 +16,7 @@ import java.util.List;
 public class MealInfo implements Comparable<MealInfo>{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate date;
     @ManyToOne(cascade = CascadeType.PERSIST)

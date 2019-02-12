@@ -1,4 +1,4 @@
-package pl.grzegorzchmaj.easydiet.models.services;
+package pl.grzegorzchmaj.easydiet.services;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,15 +9,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import pl.grzegorzchmaj.easydiet.enums.HowManyMeals;
-import pl.grzegorzchmaj.easydiet.models.entities.*;
+import pl.grzegorzchmaj.easydiet.entities.*;
 import pl.grzegorzchmaj.easydiet.repositories.DietRepository;
 import pl.grzegorzchmaj.easydiet.repositories.MealInfoRepository;
 import pl.grzegorzchmaj.easydiet.repositories.MealRepository;
 import pl.grzegorzchmaj.easydiet.repositories.UserRepository;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;

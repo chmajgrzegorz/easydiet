@@ -1,9 +1,9 @@
-package pl.grzegorzchmaj.easydiet.models.services;
+package pl.grzegorzchmaj.easydiet.services;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class TextToHtml {
+public class TextToHtmlImpl implements TextToHtml {
 
     public String toHTML(String text) {
         if(text == null) {
@@ -11,7 +11,7 @@ public class TextToHtml {
         }
         int length = text.length();
         boolean prevSlashR = false;
-        StringBuffer out = new StringBuffer();
+        StringBuilder out = new StringBuilder();
         for(int i = 0; i < length; i++) {
             char ch = text.charAt(i);
             switch(ch) {

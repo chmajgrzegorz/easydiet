@@ -6,39 +6,27 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.grzegorzchmaj.easydiet.models.entities.Ingredient;
-import pl.grzegorzchmaj.easydiet.models.services.UserInfoService;
+import pl.grzegorzchmaj.easydiet.entities.Ingredient;
 import pl.grzegorzchmaj.easydiet.repositories.IngredientRepository;
 
 @Controller
 public class IngredientController {
 
-    UserInfoService userInfoService;
-    IngredientRepository ingredientRepository;
+    private IngredientRepository ingredientRepository;
 
     @Autowired
-    public IngredientController(UserInfoService userInfoService, IngredientRepository ingredientRepository) {
-        this.userInfoService = userInfoService;
+    public IngredientController(IngredientRepository ingredientRepository) {
         this.ingredientRepository = ingredientRepository;
     }
 
     @GetMapping("/ingredient")
-    public String addIngredient(Model model, RedirectAttributes attr){
-        if(!userInfoService.isLogged()){
-            attr.addFlashAttribute("info", "Ta strona jest dostępna tylko dla zalogowanych użytkowników");
-            return "redirect:/login";
-        }
+    public String addIngredient(Model model) {
         model.addAttribute("ingredient", new Ingredient());
         return "ingredient";
     }
 
     @PostMapping("/ingredient")
-    public String addIngredientPost(@ModelAttribute("ingredient") Ingredient ingredient, RedirectAttributes attr){
-        if(!userInfoService.isLogged()){
-            attr.addFlashAttribute("info", "Ta strona jest dostępna tylko dla zalogowanych użytkowników");
-            return "redirect:/login";
-        }
+    public String addIngredientPost(@ModelAttribute("ingredient") Ingredient ingredient) {
         ingredientRepository.save(ingredient);
         System.out.println(ingredient.getName());
         return "redirect:/addmeal";

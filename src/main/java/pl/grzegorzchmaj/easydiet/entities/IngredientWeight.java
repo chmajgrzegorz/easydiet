@@ -1,4 +1,4 @@
-package pl.grzegorzchmaj.easydiet.models.entities;
+package pl.grzegorzchmaj.easydiet.entities;
 
 
 import lombok.*;
@@ -16,7 +16,7 @@ public class IngredientWeight {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "ingredient_weight_id")

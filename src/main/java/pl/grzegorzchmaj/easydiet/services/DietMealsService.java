@@ -1,4 +1,4 @@
-package pl.grzegorzchmaj.easydiet.models.services;
+package pl.grzegorzchmaj.easydiet.services;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,8 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
-import pl.grzegorzchmaj.easydiet.enums.HowManyMeals;
-import pl.grzegorzchmaj.easydiet.models.entities.*;
+import pl.grzegorzchmaj.easydiet.entities.*;
 import pl.grzegorzchmaj.easydiet.repositories.DietRepository;
 import pl.grzegorzchmaj.easydiet.repositories.MealInfoRepository;
 import pl.grzegorzchmaj.easydiet.repositories.MealRepository;

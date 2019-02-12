@@ -1,4 +1,4 @@
-package pl.grzegorzchmaj.easydiet.models.services;
+package pl.grzegorzchmaj.easydiet.services;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 import pl.grzegorzchmaj.easydiet.exceptions.ShoppingServiceException;
 import pl.grzegorzchmaj.easydiet.models.ShoppingList;
-import pl.grzegorzchmaj.easydiet.models.entities.*;
-import pl.grzegorzchmaj.easydiet.repositories.UserRepository;
+import pl.grzegorzchmaj.easydiet.entities.*;
 
 import java.util.*;
 

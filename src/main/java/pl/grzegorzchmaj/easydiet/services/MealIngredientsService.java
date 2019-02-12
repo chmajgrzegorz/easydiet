@@ -1,16 +1,15 @@
-package pl.grzegorzchmaj.easydiet.models.services;
+package pl.grzegorzchmaj.easydiet.services;
 
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
-import pl.grzegorzchmaj.easydiet.models.entities.Ingredient;
-import pl.grzegorzchmaj.easydiet.models.entities.IngredientWeight;
-import pl.grzegorzchmaj.easydiet.models.forms.MealForm;
+import pl.grzegorzchmaj.easydiet.entities.Ingredient;
+import pl.grzegorzchmaj.easydiet.entities.IngredientWeight;
+import pl.grzegorzchmaj.easydiet.forms.MealForm;
 
 import java.util.ArrayList;
 import java.util.List;

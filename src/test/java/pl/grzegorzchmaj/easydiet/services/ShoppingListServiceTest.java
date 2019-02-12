@@ -1,4 +1,4 @@
-package pl.grzegorzchmaj.easydiet.models.services;
+package pl.grzegorzchmaj.easydiet.services;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import pl.grzegorzchmaj.easydiet.exceptions.ShoppingServiceException;
 import pl.grzegorzchmaj.easydiet.models.ShoppingList;
-import pl.grzegorzchmaj.easydiet.models.entities.*;
+import pl.grzegorzchmaj.easydiet.entities.*;
 
 import java.util.*;
 

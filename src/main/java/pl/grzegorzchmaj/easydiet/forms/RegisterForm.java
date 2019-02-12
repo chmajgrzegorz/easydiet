@@ -1,4 +1,4 @@
-package pl.grzegorzchmaj.easydiet.models.forms;
+package pl.grzegorzchmaj.easydiet.forms;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
