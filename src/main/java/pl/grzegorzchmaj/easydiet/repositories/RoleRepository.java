@@ -7,10 +7,11 @@ import org.springframework.stereotype.Repository;
 import pl.grzegorzchmaj.easydiet.entities.Role;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role,Long> {
 
     @Query(value = "SELECT * FROM role WHERE role.role_name = 'USER'", nativeQuery = true)
-    List<Role> findDefaultRoles();
+    Set<Role> findDefaultRoles();
 }
