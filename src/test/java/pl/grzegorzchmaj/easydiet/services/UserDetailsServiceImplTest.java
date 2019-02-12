@@ -38,10 +38,7 @@ public class UserDetailsServiceImplTest {
 
     @Test(expected = UsernameNotFoundException.class)
     public void testLoadUserByUsernameWhenUsernameNotFound() {
-
-        //SETUP
-        when(userRepository.findByLogin(anyString())).thenReturn(user);
-
+        
         //CALL
         userDetailsService.loadUserByUsername(null);
 
