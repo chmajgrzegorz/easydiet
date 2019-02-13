@@ -1,6 +1,9 @@
 package pl.grzegorzchmaj.easydiet.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,6 +15,7 @@ import java.util.Set;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Table(name = "ingredient_weight")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class IngredientWeight {
 
 
@@ -23,9 +27,11 @@ public class IngredientWeight {
     private Ingredient ingredient;
     private Long weight;
 
+
     @ManyToMany
     @JoinTable(name = "meal_ingredient", joinColumns = @JoinColumn(name = "ingredient_id"),
             inverseJoinColumns = @JoinColumn(name = "meal_id"))
+    @JsonBackReference
     private Set<Meal> meals;
 
 }

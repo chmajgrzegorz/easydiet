@@ -1,4 +1,4 @@
-package pl.grzegorzchmaj.easydiet.config;
+package pl.grzegorzchmaj.easydiet.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import pl.grzegorzchmaj.easydiet.services.UserDetailsServiceImpl;
 
 
@@ -18,10 +19,12 @@ import pl.grzegorzchmaj.easydiet.services.UserDetailsServiceImpl;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsService;
+    private AuthenticationEntryPoint authEntryPoint;
 
     @Autowired
-    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService) {
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService,AuthenticationEntryPoint authEntryPoint) {
         this.userDetailsService = userDetailsService;
+        this.authEntryPoint = authEntryPoint;
     }
 
 
@@ -38,6 +41,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .anyRequest()
+                .hasAuthority("USER")
+                .and()
+                .authorizeRequests()
+                .antMatchers("/api/**")
                 .hasAuthority("USER");
 
         http.authorizeRequests().and()
@@ -53,6 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().and()
                 .exceptionHandling()
                 .accessDeniedPage("/403");
+
+        http.csrf().disable().httpBasic().authenticationEntryPoint(authEntryPoint);
     }
 
     @Bean

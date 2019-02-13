@@ -1,5 +1,9 @@
 package pl.grzegorzchmaj.easydiet.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import pl.grzegorzchmaj.easydiet.forms.DietForm;
 
@@ -11,10 +15,11 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"id","user"})
+@EqualsAndHashCode(exclude = {"id", "user"})
 @NoArgsConstructor
 @Table(name = "diet")
 @ToString(exclude = {"id", "user"})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Diet {
 
     @Id
@@ -22,6 +27,7 @@ public class Diet {
     private Long id;
     @OneToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
     @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JoinTable(name = "diet_meal_info", joinColumns = @JoinColumn(name = "diet_id"),

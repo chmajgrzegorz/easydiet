@@ -28,7 +28,6 @@ public class IngredientController {
     @PostMapping("/ingredient")
     public String addIngredientPost(@ModelAttribute("ingredient") Ingredient ingredient) {
         ingredientRepository.save(ingredient);
-        System.out.println(ingredient.getName());
         return "redirect:/addmeal";
     }
 }

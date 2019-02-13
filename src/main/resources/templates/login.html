@@ -9,7 +9,6 @@
     <form th:action=@{/login} method="post">
         Login: <input type="text" th:name="username"/><br/>
         Hasło: <input type="password" th:name="password"><br/>
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <input type="submit" value="Zaloguj się!"/>
      </form>
 </body>

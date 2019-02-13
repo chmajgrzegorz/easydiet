@@ -1,5 +1,8 @@
 package pl.grzegorzchmaj.easydiet.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import pl.grzegorzchmaj.easydiet.enums.HowManyMeals;
 import pl.grzegorzchmaj.easydiet.enums.PhysicalActivity;
@@ -16,6 +19,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(exclude = {"id", "roles"})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
     @Id

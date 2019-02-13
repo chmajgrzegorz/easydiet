@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface MealInfoRepository extends JpaRepository<MealInfo, Long> {
 
 
-    @Query(value = "SELECT DISTINCT Date FROM MealInfo WHERE Date BETWEEN :start AND :end", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT Date FROM Meal_Info WHERE Date BETWEEN :start AND :end", nativeQuery = true)
     Optional<List<LocalDate>> findDatesBetweenStartAndEndDate(@Param("start") Date start, @Param("end") Date end);
 
 }
