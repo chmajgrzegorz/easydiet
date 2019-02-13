@@ -38,7 +38,7 @@ public class UserDetailsServiceImplTest {
 
     @Test(expected = UsernameNotFoundException.class)
     public void testLoadUserByUsernameWhenUsernameNotFound() {
-        
+
         //CALL
         userDetailsService.loadUserByUsername(null);
 
